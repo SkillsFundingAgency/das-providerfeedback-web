@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using SFA.DAS.ProviderFeedback.Web.ViewModels
+@using SFA.DAS.ProviderFeedback.Web.Views
+@model SFA.DAS.ProviderFeedback.Web.ViewModels.ValidationSummaryViewModel
+
+@if (!Model.ModelState.IsValid) {
+<div class="govuk-error-summary" role="alert" data-valmsg-summary="true" tabindex="-1">
+    <h2 class="govuk-error-summary__title">
+        There is a problem
+    </h2>
+    <div class="govuk-error-summary__body">
+        <ul class="govuk-list govuk-error-summary__list">
+            @{
+                var errorMessages = new HashSet<string>();
+                foreach (var stateItem in Model.ModelState.Where(msi => msi.Value.ValidationState == ModelValidationState.Invalid)
+                .OrderBy(x => Model.OrderedFieldNames.IndexOf(x.Key)))
+                {
+                    var errorMessage = stateItem.Value.Errors.FirstOrDefault()?.ErrorMessage;
+                    if (errorMessage != null && errorMessages.Add(errorMessage))
+                    {
+                        var errorVm = new ErrorListItemViewModel(ViewData.TemplateInfo.GetFullHtmlFieldName(stateItem.Key) ?? stateItem.Key, errorMessage);
+                        <partial name="@PartialNames.ErrorListItem" model="@errorVm" />
+                    }
+                }
+            }
+        </ul>
+    </div>
+</div>
+}

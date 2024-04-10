@@ -37,7 +37,7 @@ builder.Services.Configure<RouteOptions>(options =>
 
 });
 
-builder.Services.AddDataProtection(rootConfiguration);
+//builder.Services.AddDataProtection(rootConfiguration);
 
 builder.Services.AddFluentValidationAutoValidation();
 
@@ -68,7 +68,7 @@ app.UseEndpoints(endpointBuilder =>
 {
     endpointBuilder.MapControllerRoute(
         name: "default",
-        pattern: "{controller=GetAnAdviserController}/{action=Index}/");
+        pattern: "{controller=FeedbackController}/{action=Index}/");
 });
 
 app.Run();

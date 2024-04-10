@@ -18,7 +18,7 @@ public class Dummy : Controller
     }
 
     [HttpGet]
-    [Route("")]
+    [Route("dummy")]
     public IActionResult Index()
     {
         return View();

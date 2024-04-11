@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using static SFA.DAS.ProviderFeedback.Domain.Feedback.Feedback;
+﻿using static SFA.DAS.ProviderFeedback.Domain.GetProviderFeedback.Feedback;
 
 namespace SFA.DAS.ProviderFeedback.Web.ViewModels
 {
@@ -20,12 +16,12 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
             if (employerFeedback == null)
                 return;
 
-            TotalFeedbackRating = employerFeedback.Stars;
-            TotalFeedbackResponses = employerFeedback.ReviewCount;
+            TotalFeedbackRating = employerFeedback.TotalFeedbackRating;
+            TotalFeedbackResponses = employerFeedback.TotalEmployerResponses;
             TotalFeedbackRatingText = GetFeedbackRatingText(false);
             TotalFeedbackRatingTextProviderDetail = GetFeedbackRatingText(true);
-            TotalFeedbackText = (ProviderRating)employerFeedback.Stars;
-            FeedbackAttributeSummary = GenerateAttributeSummary(employerFeedback.ProviderAttribute);
+            TotalFeedbackText = (ProviderRating)employerFeedback.TotalFeedbackRating;
+            FeedbackAttributeSummary = GenerateAttributeSummary(employerFeedback.FeedbackAttributes);
         }
 
         private string GetFeedbackRatingText(bool isProviderDetail)
@@ -55,7 +51,7 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
                 AttributeSummary.Add(
                     new EmployerFeedbackDetailViewModel
                     {
-                        AttributeName = entry.Name,
+                        AttributeName = entry.AttributeName,
                         StrengthCount = entry.Strength,
                         WeaknessCount = entry.Weakness,
                         TotalCount = totalCount,

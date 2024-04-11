@@ -1,4 +1,4 @@
-﻿using static SFA.DAS.ProviderFeedback.Domain.Feedback.Feedback;
+﻿using static SFA.DAS.ProviderFeedback.Domain.GetProviderFeedback.Feedback;
 
 namespace SFA.DAS.ProviderFeedback.Web.ViewModels
 {
@@ -16,12 +16,12 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
             if (apprenticeFeedback == null)
                 return;
 
-            TotalFeedbackRating = apprenticeFeedback.Stars;
-            TotalFeedbackResponses = apprenticeFeedback.ReviewCount;
+            TotalFeedbackRating = apprenticeFeedback.TotalFeedbackRating;
+            TotalFeedbackResponses = apprenticeFeedback.TotalApprenticeResponses;
             TotalFeedbackRatingText = GetFeedbackRatingText(false);
             TotalFeedbackRatingTextProviderDetail = GetFeedbackRatingText(true);
-            TotalFeedbackText = (ProviderRating)apprenticeFeedback.Stars;
-            FeedbackAttributeSummary = GenerateAttributeSummary(apprenticeFeedback.ProviderAttribute);
+            TotalFeedbackText = (ProviderRating)apprenticeFeedback.TotalFeedbackRating;
+            FeedbackAttributeSummary = GenerateAttributeSummary(apprenticeFeedback.FeedbackAttributes);
         }
 
         private string GetFeedbackRatingText(bool isProviderDetail)

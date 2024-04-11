@@ -33,8 +33,4 @@
     <ProjectReference Include="..\SFA.DAS.ProviderFeedback.Application\SFA.DAS.ProviderFeedback.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
-
 </Project>

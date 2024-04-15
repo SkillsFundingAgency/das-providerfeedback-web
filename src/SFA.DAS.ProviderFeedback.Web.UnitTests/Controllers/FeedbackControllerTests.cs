@@ -6,12 +6,6 @@ using Moq;
 using NUnit.Framework;
 using SFA.DAS.ProviderFeedback.Web.Controllers;
 using SFA.DAS.ProviderFeedback.Web.ViewModels;
-using SFA.DAS.ProviderFeedback.Domain.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SFA.DAS.ProviderFeedback.Application.Queries.GetProviderFeedback;
 using static SFA.DAS.ProviderFeedback.Domain.GetProviderFeedback.Feedback;
 

@@ -9,6 +9,6 @@ namespace SFA.DAS.ProviderFeedback.Domain.GetProviderFeedback
         {
             ProviderId = providerId;
         }
-        public string GetUrl => $"provider/{ProviderId}";
+        public string GetUrl => $"providerFeedback/{ProviderId}";
     }
 }

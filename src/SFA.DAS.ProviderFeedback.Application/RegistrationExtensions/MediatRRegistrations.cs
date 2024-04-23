@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SFA.DAS.ProviderFeedback.Domain.GetProviderFeedback;
+using SFA.DAS.ProviderFeedback.Application.Queries.GetProviderFeedback;
 
 namespace SFA.DAS.ProviderFeedback.Application.RegistrationExtensions
 {
@@ -7,7 +7,7 @@ namespace SFA.DAS.ProviderFeedback.Application.RegistrationExtensions
     {
         public static IServiceCollection AddMediatRHandlers(this IServiceCollection services)
         {
-            services.AddMediatR(options => options.RegisterServicesFromAssemblyContaining<Feedback>());
+            services.AddMediatR(options => options.RegisterServicesFromAssemblyContaining<GetProviderFeedbackQuery>());
             return services;
         }
     }

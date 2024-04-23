@@ -22,9 +22,9 @@ public static class AddDataProtectionExtensions
             var redis = ConnectionMultiplexer
                 .Connect(configurationOptions);
 
-            services.AddDataProtection()
-                .SetApplicationName("das-providerfeedback")
-                .PersistKeysToStackExchangeRedis(redis, "DataProtection-Keys");
+            //services.AddDataProtection()
+            //    .SetApplicationName("das-providerfeedback")
+            //    .PersistKeysToStackExchangeRedis(redis, "DataProtection-Keys");
         }
     }
 }

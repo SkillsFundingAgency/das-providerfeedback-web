@@ -15,6 +15,7 @@ namespace SFA.DAS.ProviderFeedbackWeb.UnitTests.Controllers
     public class FeedbackControllerTests
     {
         private Mock<IOptions<SFA.DAS.ProviderFeedback.Domain.Configuration.ProviderFeedbackWeb>> _configMock;
+        //private Mock<VacancyClient> _clientMock;
 
         [SetUp]
         public void SetUp()

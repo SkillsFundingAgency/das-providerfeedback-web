@@ -5,6 +5,11 @@ using SFA.DAS.Provider.Shared.UI.Startup;
 using SFA.DAS.ProviderFeedback.Application.RegistrationExtensions;
 using SFA.DAS.Validation.Mvc.Extensions;
 using SFA.DAS.ProviderFeedback.Domain.Configuration;
+using SFA.DAS.ProviderFeedback.Web.Configuration;
+using SFA.DAS.ProviderFeedback.Domain.Entities;
+using SFA.DAS.DfESignIn.Auth.Enums;
+using SFA.DAS.DfESignIn.Auth.AppStart;
+using Esfa.Recruit.Shared.Web.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,7 +43,6 @@ builder.Services.Configure<RouteOptions>(options =>
     {
         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
     }
-
 });
 
 //builder.Services.AddDataProtection(rootConfiguration);
@@ -46,6 +50,30 @@ builder.Services.Configure<RouteOptions>(options =>
 builder.Services.AddFluentValidationAutoValidation();
 
 builder.Services.AddApplicationInsightsTelemetry();
+
+#region Authentication update
+
+bool useDfESignIn = (rootConfiguration["UseDfESignIn"]).Equals("true", StringComparison.CurrentCultureIgnoreCase);
+if (useDfESignIn)
+{
+    builder.Services.AddAndConfigureDfESignInAuthentication(
+        rootConfiguration,
+        "SFA.DAS.ProviderFeedbackService",
+        typeof(CustomServiceRole),
+        ClientName.ProviderRoatp,
+        "/signout",
+        "");
+}
+else
+{
+    builder.Services.AddAuthenticationService(rootConfiguration.GetSection("Authentication").Get<AuthenticationConfiguration>());
+}
+
+builder.Services.AddAuthorizationService(useDfESignIn);
+
+builder.Services.AddProviderUiServiceRegistration(rootConfiguration);
+
+#endregion Authentication update
 
 
 var app = builder.Build();

@@ -74,10 +74,12 @@
       "type": "string"
     },
     "showReviewNotice": {
-      "type": "bool"
+      "type": "bool",
+      "defaultValue": false
     },
     "reviewNoticeDate": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "Notice Date"
     }
   },
     "variables": {

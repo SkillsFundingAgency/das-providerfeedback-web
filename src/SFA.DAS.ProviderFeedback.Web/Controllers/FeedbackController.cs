@@ -2,14 +2,14 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using SFA.DAS.ProviderFeedback.Web.Infrastructure;
 using SFA.DAS.ProviderFeedback.Web.ViewModels;
-using System.Text.Json;
 using SFA.DAS.ProviderFeedback.Application.Queries.GetProviderFeedback;
 using SFA.DAS.ProviderFeedback.Domain.Configuration;
 using Microsoft.Extensions.Options;
-
+using Microsoft.AspNetCore.Authorization;
+using SFA.DAS.ProviderFeedback.Web.Infrastructure.Authorization;
 
 namespace SFA.DAS.ProviderFeedback.Web.Controllers;
-
+[Authorize(Policy = nameof(PolicyNames.HasProviderAccount))]
 public class FeedbackController : Controller
 {
     private readonly IMediator _mediator;

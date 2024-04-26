@@ -60,7 +60,7 @@ namespace SFA.DAS.ProviderFeedbackWeb.UnitTests.Controllers
             controller.ControllerContext = new ControllerContext() { HttpContext = new DefaultHttpContext() { User = claimsPrinciple } };
 
             var result =
-                await controller.Index(providerId) as ViewResult;
+                await controller.Index() as ViewResult;
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Model, Is.InstanceOf<ProviderFeedbackViewModel>());

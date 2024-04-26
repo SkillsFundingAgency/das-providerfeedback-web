@@ -37,21 +37,14 @@ builder.Services.AddMediatRHandlers();
 
 builder.Services.AddAuthorizationServicePolicies();
 
-if (rootConfiguration["StubProviderAuth"] != null && rootConfiguration["StubProviderAuth"].Equals("true", StringComparison.CurrentCultureIgnoreCase))
-{
-    builder.Services.AddProviderStubAuthentication();
-}
-else
-{
-
-    builder.Services.AddAndConfigureDfESignInAuthentication(
+builder.Services.AddAndConfigureDfESignInAuthentication(
     rootConfiguration,
     "SFA.DAS.ProviderApprenticeshipService",
     typeof(CustomServiceRole),
     ClientName.ProviderRoatp,
     "/signout",
     "");
-}
+
 
 builder.Services.AddHealthChecks();
 

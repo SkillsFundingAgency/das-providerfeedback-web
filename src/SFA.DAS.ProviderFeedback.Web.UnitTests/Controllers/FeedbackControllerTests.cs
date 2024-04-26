@@ -8,6 +8,9 @@ using SFA.DAS.ProviderFeedback.Web.Controllers;
 using SFA.DAS.ProviderFeedback.Web.ViewModels;
 using SFA.DAS.ProviderFeedback.Application.Queries.GetProviderFeedback;
 using static SFA.DAS.ProviderFeedback.Domain.GetProviderFeedback.Feedback;
+using Microsoft.AspNetCore.Http;
+using SFA.DAS.ProviderFeedback.Web.Infrastructure.Authorization;
+using System.Security.Claims;
 
 namespace SFA.DAS.ProviderFeedbackWeb.UnitTests.Controllers
 {
@@ -52,7 +55,10 @@ namespace SFA.DAS.ProviderFeedbackWeb.UnitTests.Controllers
 
             var controller = new FeedbackController(mediatorMock.Object, loggerMock.Object, _configMock.Object);
 
-            
+            var claim = new Claim(ProviderClaims.ProviderUkprn, providerId.ToString());
+            var claimsPrinciple = new ClaimsPrincipal(new[] { new ClaimsIdentity(new[] { claim }) });
+            controller.ControllerContext = new ControllerContext() { HttpContext = new DefaultHttpContext() { User = claimsPrinciple } };
+
             var result =
                 await controller.Index(providerId) as ViewResult;
 

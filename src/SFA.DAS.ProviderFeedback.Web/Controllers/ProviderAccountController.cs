@@ -19,18 +19,13 @@ namespace SFA.DAS.ProviderFeedback.Web.Controllers
         [Route("signout",Name = RouteNames.ProviderSignOut)]
         public IActionResult SignOut()
         {
-            var authScheme = _config.UseDfESignIn
-                ? OpenIdConnectDefaults.AuthenticationScheme
-                : WsFederationDefaults.AuthenticationScheme;
-
             return SignOut(
                 new Microsoft.AspNetCore.Authentication.AuthenticationProperties
                 {
                     RedirectUri = "",
                     AllowRefresh = true
                 },
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                authScheme);
+                OpenIdConnectDefaults.AuthenticationScheme);
         }
     }
 }

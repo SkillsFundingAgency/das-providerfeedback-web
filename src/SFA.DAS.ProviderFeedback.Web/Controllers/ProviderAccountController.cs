@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Authentication.WsFederation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SFA.DAS.ProviderFeedback.Web.Infrastructure;
@@ -16,7 +14,7 @@ namespace SFA.DAS.ProviderFeedback.Web.Controllers
             _config = config.Value;
         }
 
-        [Route("signout",Name = RouteNames.ProviderSignOut)]
+        [Route("signout", Name = RouteNames.ProviderSignOut)]
         public IActionResult SignOut()
         {
             return SignOut(

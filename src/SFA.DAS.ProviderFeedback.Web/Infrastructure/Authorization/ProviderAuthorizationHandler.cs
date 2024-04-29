@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 
 namespace SFA.DAS.ProviderFeedback.Web.Infrastructure.Authorization
 {
@@ -8,11 +6,11 @@ namespace SFA.DAS.ProviderFeedback.Web.Infrastructure.Authorization
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ProviderAuthorizationHandler (IHttpContextAccessor httpContextAccessor)
+        public ProviderAuthorizationHandler(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }
-        
+
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ProviderUkPrnRequirement requirement)
         {
             if (!IsProviderAuthorised(context))
@@ -20,7 +18,7 @@ namespace SFA.DAS.ProviderFeedback.Web.Infrastructure.Authorization
                 context.Fail();
                 return Task.CompletedTask;
             }
-                
+
             context.Succeed(requirement);
 
             return Task.CompletedTask;
@@ -32,13 +30,13 @@ namespace SFA.DAS.ProviderFeedback.Web.Infrastructure.Authorization
             {
                 return false;
             }
-            
+
             if (_httpContextAccessor.HttpContext.Request.RouteValues.ContainsKey("ukprn"))
             {
                 var ukPrnFromUrl = _httpContextAccessor.HttpContext.Request.RouteValues["ukprn"].ToString();
                 var ukPrn = context.User.FindFirst(c => c.Type.Equals(ProviderClaims.ProviderUkprn)).Value;
 
-                return ukPrn.Equals(ukPrnFromUrl);    
+                return ukPrn.Equals(ukPrnFromUrl);
             }
 
             return true;

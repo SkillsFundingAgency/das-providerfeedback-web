@@ -1,5 +1,5 @@
-using System.Security.Claims;
 using AutoFixture.NUnit3;
+using FluentAssertions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using Moq;
 using NUnit.Framework;
+using SFA.DAS.ProviderFeedback.Domain.ApiResponse;
 using SFA.DAS.ProviderFeedback.Domain.Interfaces;
 using SFA.DAS.ProviderFeedback.Domain.ProviderAccounts.Api.Requests;
 using SFA.DAS.ProviderFeedback.Domain.ProviderAccounts.Api.Responses;
 using SFA.DAS.ProviderFeedback.Web.Infrastructure.Authorization;
 using SFA.DAS.Testing.AutoFixture;
-using FluentAssertions;
-using SFA.DAS.ProviderFeedback.Domain.ApiResponse;
+using System.Security.Claims;
 
 namespace SFA.DAS.ProviderFeedback.Web.UnitTests.Infrastructure.Authorization;
 
@@ -28,8 +28,8 @@ public class WhenHandlingTrainingProviderAllRolesRequirement
     {
         //Arrange
         var claim = new Claim("NotProviderClaim", ukprn.ToString());
-        var claimsPrinciple = new ClaimsPrincipal(new[] {new ClaimsIdentity(new[] {claim})});
-        var context = new AuthorizationHandlerContext(new [] {providerRequirement}, claimsPrinciple, null);
+        var claimsPrinciple = new ClaimsPrincipal(new[] { new ClaimsIdentity(new[] { claim }) });
+        var context = new AuthorizationHandlerContext(new[] { providerRequirement }, claimsPrinciple, null);
 
         //Act
         await authorizationHandler.HandleAsync(context);
@@ -38,7 +38,7 @@ public class WhenHandlingTrainingProviderAllRolesRequirement
         Assert.IsFalse(context.HasSucceeded);
         Assert.IsTrue(context.HasFailed);
     }
-    
+
     [Test, MoqAutoData]
     public async Task Then_Fails_If_Non_Numeric_Provider_Ukprn_Claim(
         string ukprn,
@@ -47,8 +47,8 @@ public class WhenHandlingTrainingProviderAllRolesRequirement
     {
         //Arrange
         var claim = new Claim(ProviderClaims.ProviderUkprn, ukprn);
-        var claimsPrinciple = new ClaimsPrincipal(new[] {new ClaimsIdentity(new[] {claim})});
-        var context = new AuthorizationHandlerContext(new [] {providerRequirement}, claimsPrinciple, null);
+        var claimsPrinciple = new ClaimsPrincipal(new[] { new ClaimsIdentity(new[] { claim }) });
+        var context = new AuthorizationHandlerContext(new[] { providerRequirement }, claimsPrinciple, null);
 
         //Act
         await authorizationHandler.HandleAsync(context);
@@ -71,7 +71,7 @@ public class WhenHandlingTrainingProviderAllRolesRequirement
         httpContextBase.Setup(c => c.Response).Returns(httpResponse.Object);
         var filterContext = new AuthorizationFilterContext(new ActionContext(httpContextBase.Object, new RouteData(), new ActionDescriptor()), new List<IFilterMetadata>());
         var claim = new Claim(ProviderClaims.ProviderUkprn, ukprn.ToString());
-        var claimsPrinciple = new ClaimsPrincipal(new[] {new ClaimsIdentity(new[] {claim})});
+        var claimsPrinciple = new ClaimsPrincipal(new[] { new ClaimsIdentity(new[] { claim }) });
         var context = new AuthorizationHandlerContext(new[] { providerRequirement }, claimsPrinciple, filterContext);
 
         var response = new ApiResponse<GetProviderAccountResponse>(new GetProviderAccountResponse { CanAccessService = false }, System.Net.HttpStatusCode.Found, string.Empty);// Body = new GetProviderAccountResponse { CanAccessService = false } };
@@ -84,7 +84,7 @@ public class WhenHandlingTrainingProviderAllRolesRequirement
 
         //Assert
         context.HasSucceeded.Should().BeTrue();
-        httpResponse.Verify(x=>x.Redirect(It.Is<string>(c=>c.Contains("/error/403/invalid-status"))));
+        httpResponse.Verify(x => x.Redirect(It.Is<string>(c => c.Contains("/error/403/invalid-status"))));
     }
     [Test, MoqAutoData]
     public async Task Then_Succeeds_If_Provider_Ukprn_Claim_Response_Is_True(
@@ -95,8 +95,8 @@ public class WhenHandlingTrainingProviderAllRolesRequirement
     {
         //Arrange
         var claim = new Claim(ProviderClaims.ProviderUkprn, ukprn.ToString());
-        var claimsPrinciple = new ClaimsPrincipal(new[] {new ClaimsIdentity(new[] {claim})});
-        var context = new AuthorizationHandlerContext(new [] {providerRequirement}, claimsPrinciple, null);
+        var claimsPrinciple = new ClaimsPrincipal(new[] { new ClaimsIdentity(new[] { claim }) });
+        var context = new AuthorizationHandlerContext(new[] { providerRequirement }, claimsPrinciple, null);
         var response = new ApiResponse<GetProviderAccountResponse>(new GetProviderAccountResponse { CanAccessService = true }, System.Net.HttpStatusCode.Found, string.Empty);// Body = new GetProviderAccountResponse { CanAccessService = false } };
 
         apiClient.Setup(x =>

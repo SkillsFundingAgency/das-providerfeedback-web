@@ -1,16 +1,14 @@
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SFA.DAS.ProviderFeedback.Web.AppStart;
+using SFA.DAS.DfESignIn.Auth.AppStart;
+using SFA.DAS.DfESignIn.Auth.Enums;
 using SFA.DAS.Provider.Shared.UI.Startup;
 using SFA.DAS.ProviderFeedback.Application.RegistrationExtensions;
-using SFA.DAS.Validation.Mvc.Extensions;
 using SFA.DAS.ProviderFeedback.Domain.Configuration;
-using Microsoft.AspNetCore.Authorization;
+using SFA.DAS.ProviderFeedback.Web.AppStart;
 using SFA.DAS.ProviderFeedback.Web.Infrastructure.Authorization;
-using SFA.DAS.DfESignIn.Auth.Enums;
-using SFA.DAS.DfESignIn.Auth.Interfaces;
-using SFA.DAS.ProviderFeedback.Domain.Configuration;
-using SFA.DAS.DfESignIn.Auth.AppStart;
+using SFA.DAS.Validation.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,7 +62,7 @@ builder.Services.Configure<RouteOptions>(options =>
 
 });
 
-//builder.Services.AddDataProtection(rootConfiguration);
+builder.Services.AddDataProtection(rootConfiguration);
 
 builder.Services.AddFluentValidationAutoValidation();
 

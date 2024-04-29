@@ -1,11 +1,8 @@
-using System.Security.Claims;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SFA.DAS.ProviderFeedback.Web.Infrastructure.Authorization;
+using System.Security.Claims;
+using System.Text.Encodings.Web;
 
 namespace SFA.DAS.ProviderFeedback.Web.AppStart
 {
@@ -17,7 +14,7 @@ namespace SFA.DAS.ProviderFeedback.Web.AppStart
         {
             _httpContextAccessor = httpContextAccessor;
         }
- 
+
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             var claims = new[]
@@ -30,12 +27,12 @@ namespace SFA.DAS.ProviderFeedback.Web.AppStart
             var identity = new ClaimsIdentity(claims, "Provider-stub");
             var principal = new ClaimsPrincipal(identity);
             var ticket = new AuthenticationTicket(principal, "Provider-stub");
- 
+
             var result = AuthenticateResult.Success(ticket);
- 
-            _httpContextAccessor.HttpContext.Items.Add(ClaimsIdentity.DefaultNameClaimType,"10000001");
-            _httpContextAccessor.HttpContext.Items.Add(ProviderClaims.DisplayName,"AED User");
-            
+
+            _httpContextAccessor.HttpContext.Items.Add(ClaimsIdentity.DefaultNameClaimType, "10000001");
+            _httpContextAccessor.HttpContext.Items.Add(ProviderClaims.DisplayName, "AED User");
+
             return Task.FromResult(result);
         }
     }

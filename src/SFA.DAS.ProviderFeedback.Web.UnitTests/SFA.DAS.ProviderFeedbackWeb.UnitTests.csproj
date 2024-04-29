@@ -27,8 +27,4 @@
     <ProjectReference Include="..\SFA.DAS.ProviderFeedback.Web\SFA.DAS.ProviderFeedback.Web.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

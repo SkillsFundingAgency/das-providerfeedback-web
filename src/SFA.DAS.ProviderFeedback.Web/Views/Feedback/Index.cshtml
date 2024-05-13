@@ -1,15 +1,22 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using SFA.DAS.ProviderFeedback.Domain.Extensions
+@using SFA.DAS.ProviderFeedback.Web.TagHelpers
+@using SFA.DAS.ProviderUrlHelper.Core
+@inject SFA.DAS.ProviderUrlHelper.ILinkGenerator LinkGenerator
 @model SFA.DAS.ProviderFeedback.Web.ViewModels.ProviderFeedbackViewModel
 @{
     ViewBag.Vpv = "/feedback/page-index";
     ViewBag.Title = "FeedbackController";
 }
 
-@section BackLink
+@section breadcrumb {
+    <a id="back-link" class="govuk-back-link" href="@LinkGenerator.ProviderApprenticeshipServiceLink("account")">Back</a>
+}
+
+@* @section BackLink
 {
     <a esfa-automation="link-back" class="govuk-back-link">Back</a>
-}
+} *@
 <main class="govuk-main-wrapper " id="main-content" role="main">
 
     <div class="govuk-grid-row">

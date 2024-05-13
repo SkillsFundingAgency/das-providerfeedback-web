@@ -11,5 +11,8 @@ public static class AddConfigurationOptionsExtension
     {
         services.Configure<ProviderFeedbackOuterApi>(configuration.GetSection(nameof(ProviderFeedbackOuterApi)));
         services.AddSingleton(cfg => cfg.GetService<IOptions<ProviderFeedbackOuterApi>>().Value);
+
+        services.Configure<Features>(configuration.GetSection(nameof(Features)));
+        services.AddSingleton(cfg => cfg.GetService<IOptions<Features>>().Value);
     }
 }

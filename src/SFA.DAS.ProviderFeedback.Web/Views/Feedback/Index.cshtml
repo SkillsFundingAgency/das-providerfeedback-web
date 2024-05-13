@@ -1,5 +1,6 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using SFA.DAS.ProviderFeedback.Domain.Extensions
+﻿@using SFA.DAS.ProviderFeedback.Domain.Extensions
+@using SFA.DAS.ProviderFeedback.Web.Configuration
+@using SFA.DAS.ProviderFeedback.Web.TagHelpers
 @model SFA.DAS.ProviderFeedback.Web.ViewModels.ProviderFeedbackViewModel
 @inject SFA.DAS.ProviderUrlHelper.ILinkGenerator LinkGenerator
 @{
@@ -32,7 +33,7 @@
                     </p>
                 </div>
             </div>
-
+            <esfaFeatureEnabled name="@FeatureNames.ShowEmployerReviews">
             <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Employer reviews</h2>
             <p class="govuk-body-l govuk-!-margin-bottom-4">
                 @if (Model.EmployerFeedback.TotalFeedbackRating != 0)
@@ -105,7 +106,7 @@
                 </div>
             </details>
             }
-
+            </esfaFeatureEnabled>
             <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Apprentice reviews</h2>
             <p class="govuk-body-l govuk-!-margin-bottom-4">
                 @if (Model.ApprenticeFeedback.TotalFeedbackRating != 0)

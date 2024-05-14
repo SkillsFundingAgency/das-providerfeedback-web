@@ -1,15 +1,15 @@
-using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using SFA.DAS.ProviderFeedback.Web.Infrastructure;
-using SFA.DAS.ProviderFeedback.Web.ViewModels;
-using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using SFA.DAS.ProviderFeedback.Application.Queries.GetProviderFeedback;
 using SFA.DAS.ProviderFeedback.Domain.Configuration;
-using Microsoft.Extensions.Options;
-
+using SFA.DAS.ProviderFeedback.Web.Infrastructure;
+using SFA.DAS.ProviderFeedback.Web.Infrastructure.Authorization;
+using SFA.DAS.ProviderFeedback.Web.ViewModels;
 
 namespace SFA.DAS.ProviderFeedback.Web.Controllers;
-
+[Authorize(Policy = nameof(PolicyNames.HasProviderAccount))]
 public class FeedbackController : Controller
 {
     private readonly IMediator _mediator;
@@ -27,14 +27,16 @@ public class FeedbackController : Controller
     }
 
     [HttpGet]
-    [Route("{providerId}", Name = RouteNames.ServiceStartDefault)]
-    public async Task<IActionResult> Index(int providerId)
+    [Route("", Name = RouteNames.ServiceStartDefault)]
+    public async Task<IActionResult> Index()
     {
+        var ukprn = HttpContext.User.FindFirst(c => c.Type.Equals(ProviderClaims.ProviderUkprn)).Value;
+
         ProviderFeedbackViewModel model = new ProviderFeedbackViewModel(
 
             await _mediator.Send(new GetProviderFeedbackQuery
             {
-                ProviderId = providerId
+                ProviderId = int.Parse(ukprn)
             })
         );
 
@@ -43,5 +45,6 @@ public class FeedbackController : Controller
 
         return View(model);
     }
+
 }
 

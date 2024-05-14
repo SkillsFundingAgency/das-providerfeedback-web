@@ -1,18 +1,10 @@
-﻿using AutoFixture;
-using Microsoft.Extensions.Logging;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using SFA.DAS.ProviderFeedback.Application.Queries.GetProviderFeedback;
 using SFA.DAS.ProviderFeedback.Domain.ApiResponse;
 using SFA.DAS.ProviderFeedback.Domain.GetProviderFeedback;
 using SFA.DAS.ProviderFeedback.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SFA.DAS.ProviderFeedback.Application.UnitTests.Commands
 {
@@ -25,7 +17,7 @@ namespace SFA.DAS.ProviderFeedback.Application.UnitTests.Commands
         }
 
         [Test]
-        public async Task GetProviderFeedbackHandler() 
+        public async Task GetProviderFeedbackHandler()
         {
             // Arrange
             var mockApiClient = new Mock<IApiClient>();
@@ -36,17 +28,17 @@ namespace SFA.DAS.ProviderFeedback.Application.UnitTests.Commands
 
             var expectedResponse = new GetProviderFeedbackResponse
             {
-                ProviderFeedback = new Feedback.ProviderFeedbackModel 
+                ProviderFeedback = new Feedback.ProviderFeedbackModel
                 {
                     ProviderId = request.ProviderId,
-                    EmployerFeedback = new Feedback.EmployerFeedback() 
-                    { 
+                    EmployerFeedback = new Feedback.EmployerFeedback()
+                    {
                         TotalEmployerResponses = 2,
                         TotalFeedbackRating = 4,
                         FeedbackAttributes = new List<Feedback.EmployerFeedbackAttributeDetail>()
-                        { 
+                        {
                             new Feedback.EmployerFeedbackAttributeDetail
-                            { 
+                            {
                                 AttributeName = "Attribute One",
                                 Rating = 5,
                                 Strength = 2,
@@ -63,11 +55,11 @@ namespace SFA.DAS.ProviderFeedback.Application.UnitTests.Commands
                             }
                         }
                     },
-                    ApprenticeFeedback = new Feedback.ApprenticeFeedback 
+                    ApprenticeFeedback = new Feedback.ApprenticeFeedback
                     {
                         TotalApprenticeResponses = 5,
                         TotalFeedbackRating = 3,
-                        FeedbackAttributes = new List<Feedback.ApprenticeFeedbackAttributeDetail> 
+                        FeedbackAttributes = new List<Feedback.ApprenticeFeedbackAttributeDetail>
                         {
                             new Feedback.ApprenticeFeedbackAttributeDetail
                             {

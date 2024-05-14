@@ -1,10 +1,14 @@
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SFA.DAS.ProviderFeedback.Web.AppStart;
+using SFA.DAS.DfESignIn.Auth.AppStart;
+using SFA.DAS.DfESignIn.Auth.Enums;
 using SFA.DAS.Provider.Shared.UI.Startup;
 using SFA.DAS.ProviderFeedback.Application.RegistrationExtensions;
-using SFA.DAS.Validation.Mvc.Extensions;
 using SFA.DAS.ProviderFeedback.Domain.Configuration;
+using SFA.DAS.ProviderFeedback.Web.AppStart;
+using SFA.DAS.ProviderFeedback.Web.Infrastructure.Authorization;
+using SFA.DAS.Validation.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,15 +17,32 @@ var rootConfiguration = builder.Configuration.LoadConfiguration(isIntegrationTes
 
 builder.Services.AddOptions();
 
+builder.Services.Configure<ProviderFeedback>(rootConfiguration.GetSection("ProviderFeedback"));
 builder.Services.Configure<ProviderFeedbackWeb>(rootConfiguration.GetSection("ProviderFeedbackWeb"));
 
 builder.Services.AddConfigurationOptions(rootConfiguration);
+
+builder.Services.AddSingleton<IAuthorizationHandler, ProviderAuthorizationHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, TrainingProviderAllRolesAuthorizationHandler>();
 
 builder.Services.AddLogging();
 
 builder.Services.AddServiceRegistration();
 
+builder.Services.AddProviderUiServiceRegistration(rootConfiguration);
+
 builder.Services.AddMediatRHandlers();
+
+builder.Services.AddAuthorizationServicePolicies();
+
+builder.Services.AddAndConfigureDfESignInAuthentication(
+    rootConfiguration,
+    "SFA.DAS.ProviderApprenticeshipService",
+    typeof(CustomServiceRole),
+    ClientName.ProviderRoatp,
+    "/signout",
+    "");
+
 
 builder.Services.AddHealthChecks();
 
@@ -41,7 +62,7 @@ builder.Services.Configure<RouteOptions>(options =>
 
 });
 
-//builder.Services.AddDataProtection(rootConfiguration);
+builder.Services.AddDataProtection(rootConfiguration);
 
 builder.Services.AddFluentValidationAutoValidation();
 

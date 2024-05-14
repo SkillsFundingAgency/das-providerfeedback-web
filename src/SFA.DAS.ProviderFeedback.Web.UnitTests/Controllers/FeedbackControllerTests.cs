@@ -1,17 +1,20 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
-using SFA.DAS.ProviderFeedback.Web.Controllers;
-using SFA.DAS.ProviderFeedback.Web.ViewModels;
 using SFA.DAS.ProviderFeedback.Application.Queries.GetProviderFeedback;
+using SFA.DAS.ProviderFeedback.Web.Controllers;
+using SFA.DAS.ProviderFeedback.Web.Infrastructure.Authorization;
+using SFA.DAS.ProviderFeedback.Web.ViewModels;
+using System.Security.Claims;
 using static SFA.DAS.ProviderFeedback.Domain.GetProviderFeedback.Feedback;
 
 namespace SFA.DAS.ProviderFeedbackWeb.UnitTests.Controllers
 {
-    [TestFixture] 
+    [TestFixture]
     public class FeedbackControllerTests
     {
         private Mock<IOptions<SFA.DAS.ProviderFeedback.Domain.Configuration.ProviderFeedbackWeb>> _configMock;
@@ -36,15 +39,15 @@ namespace SFA.DAS.ProviderFeedbackWeb.UnitTests.Controllers
 
             var providerId = 1234;
 
-            var queryResult = new GetProviderFeedbackResult 
-            { 
-                Ukprn = providerId, 
+            var queryResult = new GetProviderFeedbackResult
+            {
+                Ukprn = providerId,
                 ApprenticeFeedback = new ApprenticeFeedback()
-                { 
+                {
                     FeedbackAttributes = new List<ApprenticeFeedbackAttributeDetail>()
-                }, 
+                },
                 EmployerFeedback = new EmployerFeedback()
-                { 
+                {
                     FeedbackAttributes = new List<EmployerFeedbackAttributeDetail>()
                 }
             };
@@ -52,14 +55,17 @@ namespace SFA.DAS.ProviderFeedbackWeb.UnitTests.Controllers
 
             var controller = new FeedbackController(mediatorMock.Object, loggerMock.Object, _configMock.Object);
 
-            
+            var claim = new Claim(ProviderClaims.ProviderUkprn, providerId.ToString());
+            var claimsPrinciple = new ClaimsPrincipal(new[] { new ClaimsIdentity(new[] { claim }) });
+            controller.ControllerContext = new ControllerContext() { HttpContext = new DefaultHttpContext() { User = claimsPrinciple } };
+
             var result =
-                await controller.Index(providerId) as ViewResult;
+                await controller.Index() as ViewResult;
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Model, Is.InstanceOf<ProviderFeedbackViewModel>());
             var viewModel = (ProviderFeedbackViewModel)result.Model;
-            
+
             Assert.That(viewModel.UKPRN, Is.EqualTo(providerId));
             Assert.That(viewModel.ShowReviewNotice, Is.EqualTo(true));
             Assert.That(viewModel.ReviewNoticeDate, Is.EqualTo(_configMock.Object.Value.ReviewNoticeDate));

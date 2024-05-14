@@ -1,5 +1,5 @@
-﻿using System.Net;
-using SFA.DAS.ProviderFeedback.Domain.ApiResponse;
+﻿using SFA.DAS.ProviderFeedback.Domain.ApiResponse;
+using System.Net;
 
 namespace SFA.DAS.ProviderFeedback.Domain.Exceptions
 {

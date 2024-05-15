@@ -44,7 +44,7 @@ builder.Services.AddAndConfigureDfESignInAuthentication(
     "");
 
 
-builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecks(); 
 
 builder.Services.AddProviderUiServiceRegistration(rootConfiguration);
 
@@ -60,7 +60,7 @@ builder.Services.Configure<RouteOptions>(options =>
         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
     }
 
-});
+}).SetDfESignInConfiguration(true);
 
 builder.Services.AddDataProtection(rootConfiguration);
 

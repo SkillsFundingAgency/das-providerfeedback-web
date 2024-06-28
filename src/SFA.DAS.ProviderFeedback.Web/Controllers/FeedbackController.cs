@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using SFA.DAS.ProviderFeedback.Application.Queries.GetProviderFeedback;
+using SFA.DAS.ProviderFeedback.Application.Queries.GetProviderFeedbackAnnual;
 using SFA.DAS.ProviderFeedback.Domain.Configuration;
 using SFA.DAS.ProviderFeedback.Web.Infrastructure;
 using SFA.DAS.ProviderFeedback.Web.Infrastructure.Authorization;
@@ -32,9 +32,9 @@ public class FeedbackController : Controller
     {
         var ukprn = HttpContext.User.FindFirst(c => c.Type.Equals(ProviderClaims.ProviderUkprn)).Value;
 
-        ProviderFeedbackViewModel model = new ProviderFeedbackViewModel(
+        ProviderFeedbackAnnualViewModel model = new ProviderFeedbackAnnualViewModel(
 
-            await _mediator.Send(new GetProviderFeedbackQuery
+            await _mediator.Send(new GetProviderFeedbackAnnualQuery
             {
                 ProviderId = int.Parse(ukprn)
             })

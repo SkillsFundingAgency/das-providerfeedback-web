@@ -13,6 +13,40 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
                 return;
             }
 
+            // Determine the current academic year
+            int currentYear = DateTime.Now.Year;
+            if (DateTime.Now.Month < 8) // Academic year starts in August
+            {
+                currentYear--;
+            }
+
+            // Generate the list of expected TimePeriod values for the last five years including special cases
+            var expectedPeriods = new List<string>();
+            for (int i = 0; i < 5; i++)
+            {
+                expectedPeriods.Add($"AY{currentYear - i}");
+            }
+
+            // Include AY2324 if current date is on or before 31 July
+            if (DateTime.Now <= new DateTime(currentYear + 1, 7, 31))
+            {
+                expectedPeriods.Add($"AY{currentYear + 1}");
+            }
+
+            // Include AY2425 if current date is on or after 1 August
+            if (DateTime.Now >= new DateTime(currentYear + 1, 8, 1))
+            {
+                expectedPeriods.Add($"AY{currentYear + 2}");
+            }
+
+            // Check for missing periods
+            var existingPeriods = apprenticeFeedback.AnnualApprenticeFeedbackDetails
+                .Select(x => x.TimePeriod)
+                .ToHashSet();
+
+            var missingPeriods = expectedPeriods
+                .Where(period => !existingPeriods.Contains(period))
+                .ToList();
 
             AnnualApprenticeFeedbackDetails = apprenticeFeedback.AnnualApprenticeFeedbackDetails
                 .Select(summary => new ApprenticeFeedbackAnnualSummary
@@ -20,16 +54,27 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
                     TotalFeedbackRating = summary.TotalFeedbackRating,
                     TotalFeedbackResponses = summary.TotalApprenticeResponses,
                     TimePeriod = summary.TimePeriod,
-                    TimePeriodDisplay = FormatTimePeriod(summary.TimePeriod),
+                    DisplayYear = FormatDisplayYear(summary.TimePeriod),
+                    DisplayPeriod = FormatDisplayPeriod(summary.TimePeriod),
                     TotalFeedbackRatingText = GetFeedbackRatingText(false, summary.TotalApprenticeResponses),
                     TotalFeedbackRatingTextProviderDetail = GetFeedbackRatingText(true, summary.TotalApprenticeResponses),
                     TotalFeedbackText = (ProviderRating)summary.TotalFeedbackRating,
                     FeedbackAttributeSummary = GenerateAttributeSummary(summary.FeedbackAttributes).ToList()
                 })
                 .ToList();
+
+            // Add default records for missing periods
+            foreach (var period in missingPeriods)
+            {
+                AnnualApprenticeFeedbackDetails.Add(new ApprenticeFeedbackAnnualSummary
+                {
+                    TimePeriod = period,
+                    TotalFeedbackRating = 0, // Default value, adjust as needed
+                });
+            }
         }
 
-        private string FormatTimePeriod(string timePeriod)
+        private string FormatDisplayYear(string timePeriod)
         {
             if (timePeriod.Length == 6 && (timePeriod.StartsWith("AY")))
             {
@@ -37,8 +82,35 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
                 string endYear = "20" + timePeriod.Substring(4, 2);
                 return $"{startYear} to {endYear}";
             }
-            return timePeriod; 
+            return timePeriod;
         }
+
+        private string FormatDisplayPeriod(string timePeriod)
+        {
+            if (timePeriod.Length == 6 && timePeriod.StartsWith("AY"))
+            {
+                string startYear = "20" + timePeriod.Substring(2, 2);
+                string endYear = "20" + timePeriod.Substring(4, 2);
+
+                string startDate = $"1 August {startYear}";
+
+                DateTime currentDate = DateTime.Now;
+
+                string endDate;
+                if (currentDate <= new DateTime(int.Parse(endYear), 7, 31))
+                {
+                    endDate = currentDate.ToString("d MMMM yyyy");
+                }
+                else
+                {
+                    endDate = $"31 July {endYear}";
+                }
+
+                return $"{startDate} to {endDate}";
+            }
+            return timePeriod;
+        }
+
 
         private string GetFeedbackRatingText(bool isProviderDetail, int TotalFeedbackResponses)
         {
@@ -88,7 +160,8 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
             public string TotalFeedbackRatingTextProviderDetail { get; set; }
             public ProviderRating TotalFeedbackText { get; set; }
             public string TimePeriod { get; set; }
-            public string TimePeriodDisplay { get; set; }
+            public string DisplayYear { get; set; }
+            public string DisplayPeriod { get; set; }
             public List<ApprenticeFeedbackAnnualDetailViewModel> FeedbackAttributeSummary { get; set; }
         }
 

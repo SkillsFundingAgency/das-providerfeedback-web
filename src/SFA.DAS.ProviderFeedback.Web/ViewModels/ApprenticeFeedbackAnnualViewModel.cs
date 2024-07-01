@@ -24,19 +24,13 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
             var expectedPeriods = new List<string>();
             for (int i = 0; i < 5; i++)
             {
-                expectedPeriods.Add($"AY{currentYear - i}");
-            }
-
-            // Include AY2324 if current date is on or before 31 July
-            if (DateTime.Now <= new DateTime(currentYear + 1, 7, 31))
-            {
-                expectedPeriods.Add($"AY{currentYear + 1}");
+                expectedPeriods.Add($"AY{(currentYear - i).ToString().Substring(2)}{(currentYear - i + 1).ToString().Substring(2)}");
             }
 
             // Include AY2425 if current date is on or after 1 August
             if (DateTime.Now >= new DateTime(currentYear + 1, 8, 1))
             {
-                expectedPeriods.Add($"AY{currentYear + 2}");
+                expectedPeriods.Add($"AY{(currentYear + 2).ToString().Substring(2)}{(currentYear + 3).ToString().Substring(2)}");
             }
 
             // Check for missing periods
@@ -69,10 +63,28 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
                 AnnualApprenticeFeedbackDetails.Add(new ApprenticeFeedbackAnnualSummary
                 {
                     TimePeriod = period,
-                    TotalFeedbackRating = 0, // Default value, adjust as needed
+                    TotalFeedbackRating = 0,
+                    DisplayYear = FormatDisplayYear(period),
+                    DisplayPeriod = FormatDisplayPeriod(period),
                 });
             }
+
+            AnnualApprenticeFeedbackDetails = AnnualApprenticeFeedbackDetails
+                .OrderBy(x => x.TimePeriod != "All")
+                .ThenByDescending(x => ParseTimePeriod(x.TimePeriod))
+                .ToList();
         }
+
+        private int ParseTimePeriod(string timePeriod)
+        {
+            if (timePeriod == "All")
+            {
+                return int.MinValue;
+            }
+
+            return int.Parse(timePeriod.Substring(2, 2) + timePeriod.Substring(4, 2));
+        }
+
 
         private string FormatDisplayYear(string timePeriod)
         {
@@ -174,19 +186,6 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
             public int TotalCount { get; set; }
             public double AgreePerc { get; set; }
             public double DisagreePerc { get; set; }
-        }
-
-        public class ApprenticeFeedbackAnnualDetail
-        {
-            public ProviderRating Rating { get; set; }
-            public decimal RatingPercentage { get; set; }
-            public int RatingCount { get; set; }
-            public string RatingText => GetRatingText();
-
-            private string GetRatingText()
-            {
-                return RatingCount == 1 ? "1 review" : $"{RatingCount} reviews";
-            }
         }
     }
 }

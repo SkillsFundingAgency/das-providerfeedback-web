@@ -5,7 +5,7 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
 {
     public class EmployerFeedbackAnnualViewModel
     {
-        public List<EmployerFeedbackAnnualSummary> AnnualApprenticeFeedbackDetails { get; set; }
+        public List<EmployerFeedbackAnnualSummary> AnnualEmployerFeedbackDetails { get; set; }
 
         public EmployerFeedbackAnnualViewModel(EmployerFeedbackAnnual employerFeedback)
         {
@@ -28,12 +28,6 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
                 expectedPeriods.Add($"AY{(currentYear - i).ToString().Substring(2)}{(currentYear - i + 1).ToString().Substring(2)}");
             }
 
-            //// Include AY2324 if current date is on or before 31 July
-            //if (DateTime.Now <= new DateTime(currentYear + 1, 7, 31))
-            //{
-            //    expectedPeriods.Add($"AY{(currentYear + 1).ToString().Substring(2)}{(currentYear + 2).ToString().Substring(2)}");
-            //}
-
             // Include AY2425 if current date is on or after 1 August
             if (DateTime.Now >= new DateTime(currentYear + 1, 8, 1))
             {
@@ -50,7 +44,7 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
                 .ToList();
 
 
-            AnnualApprenticeFeedbackDetails = employerFeedback.AnnualEmployerFeedbackDetails
+            AnnualEmployerFeedbackDetails = employerFeedback.AnnualEmployerFeedbackDetails
                 .Select(summary => new EmployerFeedbackAnnualSummary
                 {
                     TotalFeedbackRating = summary.TotalFeedbackRating,
@@ -68,7 +62,7 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
             // Add default records for missing periods
             foreach (var period in missingPeriods)
             {
-                AnnualApprenticeFeedbackDetails.Add(new EmployerFeedbackAnnualSummary
+                AnnualEmployerFeedbackDetails.Add(new EmployerFeedbackAnnualSummary
                 {
                     TimePeriod = period,
                     TotalFeedbackRating = 0,
@@ -77,7 +71,7 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
                 });
             }
 
-            AnnualApprenticeFeedbackDetails = AnnualApprenticeFeedbackDetails
+            AnnualEmployerFeedbackDetails = AnnualEmployerFeedbackDetails
                 .OrderBy(x => x.TimePeriod != "All")
                 .ThenByDescending(x => ParseTimePeriod(x.TimePeriod))
                 .ToList();
@@ -85,13 +79,11 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
 
         private int ParseTimePeriod(string timePeriod)
         {
-            // Handle 'All' period separately
             if (timePeriod == "All")
             {
                 return int.MinValue;
             }
 
-            // Parse the numeric part of the time period for sorting
             return int.Parse(timePeriod.Substring(2, 2) + timePeriod.Substring(4, 2));
         }
 
@@ -192,19 +184,6 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
             public int TotalCount { get; set; }
             public double StrengthPerc { get; set; }
             public double WeaknessPerc { get; set; }
-        }
-
-        public class EmployerFeedBackAnnualDetail
-        {
-            public ProviderRating Rating { get; set; }
-            public decimal RatingPercentage { get; set; }
-            public int RatingCount { get; set; }
-            public string RatingText => GetRatingText();
-
-            private string GetRatingText()
-            {
-                return RatingCount == 1 ? "1 review" : $"{RatingCount} reviews";
-            }
         }
     }
 }

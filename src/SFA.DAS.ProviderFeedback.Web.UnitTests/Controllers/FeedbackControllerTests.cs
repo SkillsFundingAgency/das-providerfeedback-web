@@ -5,12 +5,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
-using SFA.DAS.ProviderFeedback.Application.Queries.GetProviderFeedback;
 using SFA.DAS.ProviderFeedback.Web.Controllers;
 using SFA.DAS.ProviderFeedback.Web.Infrastructure.Authorization;
 using SFA.DAS.ProviderFeedback.Web.ViewModels;
 using System.Security.Claims;
-using static SFA.DAS.ProviderFeedback.Domain.GetProviderFeedback.Feedback;
+using SFA.DAS.ProviderFeedback.Application.Queries.GetProviderFeedbackAnnual;
+using SFA.DAS.ProviderFeedback.Domain.GetProviderFeedbackAnnual;
 
 namespace SFA.DAS.ProviderFeedbackWeb.UnitTests.Controllers
 {
@@ -39,19 +39,19 @@ namespace SFA.DAS.ProviderFeedbackWeb.UnitTests.Controllers
 
             var providerId = 1234;
 
-            var queryResult = new GetProviderFeedbackResult
+            var queryResult = new GetProviderFeedbackAnnualResult
             {
                 Ukprn = providerId,
-                ApprenticeFeedback = new ApprenticeFeedback()
+                ApprenticeFeedback = new FeedbackAnnual.ApprenticeFeedbackAnnual()
                 {
-                    FeedbackAttributes = new List<ApprenticeFeedbackAttributeDetail>()
+                    AnnualApprenticeFeedbackDetails = new List<FeedbackAnnual.ApprenticeFeedbackAnnualSummary>()
                 },
-                EmployerFeedback = new EmployerFeedback()
+                EmployerFeedback = new FeedbackAnnual.EmployerFeedbackAnnual()
                 {
-                    FeedbackAttributes = new List<EmployerFeedbackAttributeDetail>()
+                    AnnualEmployerFeedbackDetails = new List<FeedbackAnnual.EmployerFeedbackAnnualSummary>()
                 }
             };
-            mediatorMock.Setup(x => x.Send(It.IsAny<GetProviderFeedbackQuery>(), default)).ReturnsAsync(queryResult);
+            mediatorMock.Setup(x => x.Send(It.IsAny<GetProviderFeedbackAnnualQuery>(), default)).ReturnsAsync(queryResult);
 
             var controller = new FeedbackController(mediatorMock.Object, loggerMock.Object, _configMock.Object);
 
@@ -63,8 +63,8 @@ namespace SFA.DAS.ProviderFeedbackWeb.UnitTests.Controllers
                 await controller.Index() as ViewResult;
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Model, Is.InstanceOf<ProviderFeedbackViewModel>());
-            var viewModel = (ProviderFeedbackViewModel)result.Model;
+            Assert.That(result.Model, Is.InstanceOf<ProviderFeedbackAnnualViewModel>());
+            var viewModel = (ProviderFeedbackAnnualViewModel)result.Model;
 
             Assert.That(viewModel.UKPRN, Is.EqualTo(providerId));
             Assert.That(viewModel.ShowReviewNotice, Is.EqualTo(true));

@@ -27,9 +27,6 @@ namespace SFA.DAS.ProviderFeedback.Domain.GetProviderFeedbackAnnual
         
         public class EmployerFeedbackAnnual
         {
-            //public int TotalEmployerResponses { get; set; }
-            //public int TotalFeedbackRating { get; set; }
-            //public List<EmployerFeedbackAnnualAttributeDetail> FeedbackAttributes { get; set; }
             public List<EmployerFeedbackAnnualSummary> AnnualEmployerFeedbackDetails { get; set; }
         }
 
@@ -43,9 +40,6 @@ namespace SFA.DAS.ProviderFeedback.Domain.GetProviderFeedbackAnnual
 
         public class ApprenticeFeedbackAnnual
         {
-            //public int TotalApprenticeResponses { get; set; }
-            //public int TotalFeedbackRating { get; set; }
-            //public List<ApprenticeFeedbackAnnualAttributeDetail> FeedbackAttributes { get; set; }
             public IEnumerable<ApprenticeFeedbackAnnualSummary> AnnualApprenticeFeedbackDetails { get; set; }
         }
 

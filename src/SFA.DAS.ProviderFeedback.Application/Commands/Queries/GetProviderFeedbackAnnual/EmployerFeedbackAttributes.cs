@@ -1,4 +1,4 @@
-﻿namespace SFA.DAS.ProviderFeedback.Application.Commands.Queries.GetProviderFeedback
+﻿namespace SFA.DAS.ProviderFeedback.Application.Commands.Queries.GetProviderFeedbackAnnual
 {
     public static class EmployerFeedbackAttributes
     {

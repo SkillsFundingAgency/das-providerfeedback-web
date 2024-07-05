@@ -131,7 +131,7 @@
                                                 <h3 class="app-graph__label">@feedbackItem.AttributeName<span class="app-graph__caption">(selected by @feedbackItem.TotalCount employers)</span></h3>
                                                 @if (feedbackItem.TotalCount > 0)
                                                 {
-                                                    <div class="app-graph__chart-wrap"><span class="app-graph__chart"><span class="app-graph__bar"><span class="app-graph__bar-value app-graph__bar-value--colour-1" style="width: @feedbackItem.StrengthPerc%;" title="@feedbackItem.StrengthPerc% of @feedbackItem.TotalCount employers selected this as a 'strength'" tabindex="0"><span class="app-graph__figure">@feedbackItem.StrengthPerc%</span></span></span></span><span class="app-graph__chart"><span class="app-graph__bar"><span class="app-graph__bar-value app-graph__bar-value--colour-2" style="width: @feedbackItem.WeaknessPerc%;" title="@feedbackItem.WeaknessPerc% of @feedbackItem.TotalCount employers selected this as a 'needs improvement'" tabindex="0"><span class="app-graph__figure">@feedbackItem.WeaknessPerc%</span></span></span></span></div>
+                                                    <div class="app-graph__chart-wrap"><span class="app-graph__chart"><span class="app-graph__bar"><span class="app-graph__bar-value app-graph__bar-value--colour-1" style="width: @feedbackItem.StrengthPerc%;" data-label="Percentage of employers that selected this as a strength" title="@feedbackItem.StrengthPerc% of @feedbackItem.TotalCount employers selected this as a 'strength'" tabindex="0"><span class="app-graph__figure">@feedbackItem.StrengthPerc%</span></span></span></span><span class="app-graph__chart"><span class="app-graph__bar"><span class="app-graph__bar-value app-graph__bar-value--colour-2" style="width: @feedbackItem.WeaknessPerc%;" title="@feedbackItem.WeaknessPerc% of @feedbackItem.TotalCount employers selected this as a 'needs improvement'" tabindex="0"><span class="app-graph__figure">@feedbackItem.WeaknessPerc%</span></span></span></span></div>
                                                 }
                                                 else
                                                 {
@@ -258,12 +258,8 @@
                             <span class="govuk-body">@apprenticeFeedback.TotalFeedbackRatingTextProviderDetail</span>
                         }
                     </p>
-                    <h4 class="govuk-heading-s">Areas of strength and improvement</h4>
-                    <p class="govuk-body">Apprentices can select:</p>
-                    <ul>
-                        <li>up to 3 things they think are your strength</li>
-                        <li>up to 3 things they think need improvement</li>
-                    </ul>
+                    <h4 class="govuk-heading-s">How apprentices found your training</h4>
+                    <p class="govuk-body">We asked apprentices what was to a reasonable standard.</p>
                     <!-- GRAPH AND TABLES CODE STARTS -->
 
                     <div data-show-hide-panels="true">
@@ -276,8 +272,8 @@
                             <div id="apprentice-feedback-graphs-@apprenticeFeedback.TimePeriod">
                                 <div class="app-graph">
                                     <ul class="app-graph-key">
-                                        <li class="app-graph-key__list-item app-graph-key__list-item--colour-1">Percentage of apprentices that selected this as a strength</li>
-                                        <li class="app-graph-key__list-item app-graph-key__list-item--colour-2">Percentage of apprentices that selected this as needs improvement</li>
+                                        <li class="app-graph-key__list-item app-graph-key__list-item--colour-1">Percentage of apprentices who said this was to a reasonable standard</li>
+                                        <li class="app-graph-key__list-item app-graph-key__list-item--colour-2">Percentage of apprentices who said this was not to a reasonable standard</li>
                                     </ul>
                                     <h2 class="govuk-caption-l app-graph__category">Communication</h2>
                                     <ul class="app-graph__list">
@@ -290,11 +286,11 @@
                                                     <div class="app-graph__chart-wrap">
                                                         <span class="app-graph__chart">
                                                             <span class="app-graph__bar">
-                                                                <span class="app-graph__bar-value app-graph__bar-value--colour-1" style="width: @feedbackItem.AgreePerc%;" title="@feedbackItem.AgreePerc% of @feedbackItem.TotalCount apprentices selected this as a 'strength'" tabindex="0"><span class="app-graph__figure">@feedbackItem.AgreePerc%</span></span>
+                                                                <span class="app-graph__bar-value app-graph__bar-value--colour-1" style="width: @feedbackItem.AgreePerc%;" data-label="Percentage of apprentices who said this was to a reasonable standard" title="@feedbackItem.AgreePerc% of apprentices agreed with this statement'" tabindex="0"><span class="app-graph__figure">@feedbackItem.AgreePerc%</span></span>
                                                             </span>
                                                         </span><span class="app-graph__chart">
                                                             <span class="app-graph__bar">
-                                                                <span class="app-graph__bar-value app-graph__bar-value--colour-2" style="width: @feedbackItem.DisagreePerc%;" title="@feedbackItem.DisagreePerc% of @feedbackItem.TotalCount apprentices selected this as a 'needs improvement'" tabindex="0"><span class="app-graph__figure">@feedbackItem.DisagreePerc%</span></span>
+                                                                <span class="app-graph__bar-value app-graph__bar-value--colour-2" style="width: @feedbackItem.DisagreePerc%;" data-label="Percentage of apprentices who said this was not to a reasonable standard" title="@feedbackItem.DisagreePerc% of apprentices disagreed with this statement" tabindex="0"><span class="app-graph__figure">@feedbackItem.DisagreePerc%</span></span>
                                                             </span>
                                                         </span>
                                                     </div>
@@ -319,11 +315,11 @@
                                                     <div class="app-graph__chart-wrap">
                                                         <span class="app-graph__chart">
                                                             <span class="app-graph__bar">
-                                                                <span class="app-graph__bar-value app-graph__bar-value--colour-1" style="width: @feedbackItem.AgreePerc%;" title="@feedbackItem.AgreePerc% of @feedbackItem.TotalCount apprentices selected this as a 'strength'" tabindex="0"><span class="app-graph__figure">@feedbackItem.AgreePerc%</span></span>
+                                                                <span class="app-graph__bar-value app-graph__bar-value--colour-1" style="width: @feedbackItem.AgreePerc%;" data-label="Percentage of apprentices who said this was to a reasonable standard" title="@feedbackItem.AgreePerc% of apprentices agreed with this statement'" tabindex="0"><span class="app-graph__figure">@feedbackItem.AgreePerc%</span></span>
                                                             </span>
                                                         </span><span class="app-graph__chart">
                                                             <span class="app-graph__bar">
-                                                                <span class="app-graph__bar-value app-graph__bar-value--colour-2" style="width: @feedbackItem.DisagreePerc%;" title="@feedbackItem.DisagreePerc% of @feedbackItem.TotalCount apprentices selected this as a 'needs improvement'" tabindex="0"><span class="app-graph__figure">@feedbackItem.DisagreePerc%</span></span>
+                                                                <span class="app-graph__bar-value app-graph__bar-value--colour-2" style="width: @feedbackItem.DisagreePerc%;" data-label="Percentage of apprentices who said this was not to a reasonable standard" title="@feedbackItem.DisagreePerc% of apprentices disagreed with this statement" tabindex="0"><span class="app-graph__figure">@feedbackItem.DisagreePerc%</span></span>
                                                             </span>
                                                         </span>
                                                     </div>
@@ -348,11 +344,11 @@
                                                     <div class="app-graph__chart-wrap">
                                                         <span class="app-graph__chart">
                                                             <span class="app-graph__bar">
-                                                                <span class="app-graph__bar-value app-graph__bar-value--colour-1" style="width: @feedbackItem.AgreePerc%;" title="@feedbackItem.AgreePerc% of @feedbackItem.TotalCount apprentices selected this as a 'strength'" tabindex="0"><span class="app-graph__figure">@feedbackItem.AgreePerc%</span></span>
+                                                                <span class="app-graph__bar-value app-graph__bar-value--colour-1" style="width: @feedbackItem.AgreePerc%;" data-label="Percentage of apprentices who said this was to a reasonable standard" title="@feedbackItem.AgreePerc% of apprentices agreed with this statement'" tabindex="0"><span class="app-graph__figure">@feedbackItem.AgreePerc%</span></span>
                                                             </span>
                                                         </span><span class="app-graph__chart">
                                                             <span class="app-graph__bar">
-                                                                <span class="app-graph__bar-value app-graph__bar-value--colour-2" style="width: @feedbackItem.DisagreePerc%;" title="@feedbackItem.DisagreePerc% of @feedbackItem.TotalCount apprentices selected this as a 'needs improvement'" tabindex="0"><span class="app-graph__figure">@feedbackItem.DisagreePerc%</span></span>
+                                                                <span class="app-graph__bar-value app-graph__bar-value--colour-2" style="width: @feedbackItem.DisagreePerc%;" data-label="Percentage of apprentices who said this was not to a reasonable standard" title="@feedbackItem.DisagreePerc% of apprentices disagreed with this statement" tabindex="0"><span class="app-graph__figure">@feedbackItem.DisagreePerc%</span></span>
                                                             </span>
                                                         </span>
                                                     </div>
@@ -379,9 +375,8 @@
                             <thead class="govuk-table__head">
                                 <tr class="govuk-table__row">
                                     <th scope="col" class="govuk-table__header">Statement</th>
-                                    <th scope="col" class="govuk-table__header govuk-table__header--numeric">Percentage of apprentices that selected this as a "strength"</th>
-                                    <th scope="col" class="govuk-table__header govuk-table__header--numeric">Percentage of apprentices that selected this as "needs improvement"</th>
-                                    <th scope="col" class="govuk-table__header govuk-table__header--numeric">Total number of apprentices that selected this statement</th>
+                                    <th scope="col" class="govuk-table__header govuk-table__header--numeric">Percentage of apprentices who said this was to a reasonable standard</th>
+                                    <th scope="col" class="govuk-table__header govuk-table__header--numeric">Percentage of apprentices who said this was not to a reasonable standard</th>
                                 </tr>
                             </thead>
                             <tbody class="govuk-table__body">
@@ -390,16 +385,15 @@
                                     <tr class="govuk-table__row">
                                         <th class="govuk-table__cell govuk-!-font-weight-regular" scope="row">@feedbackItem.Name</th>
                                         <td class="govuk-table__cell govuk-table__cell--numeric"
-                                            data-label="Percentage of apprentices that selected this as a strength"
-                                            data-title="@feedbackItem.AgreePerc% of @feedbackItem.TotalCount apprentices selected this as a 'strength'">
+                                            data-label="Percentage of apprentices who said this was to a reasonable standard"
+                                            data-title="@feedbackItem.AgreePerc% of apprentices agreed with this statement">
                                             @(feedbackItem.TotalCount > 0 ? $"{feedbackItem.AgreePerc}%" : "-")
                                         </td>
                                         <td class="govuk-table__cell govuk-table__cell--numeric"
-                                            data-label="Percentage of apprentices that selected this as needs improvement"
-                                            data-title="@feedbackItem.DisagreePerc% of @feedbackItem.TotalCount apprentices selected this as a 'needs improvement'">
+                                            data-label="Percentage of apprentices who said this was not to a reasonable standard"
+                                            data-title="@feedbackItem.DisagreePerc% of apprentices disagreed with this statement">
                                             @(feedbackItem.TotalCount > 0 ? $"{feedbackItem.DisagreePerc}%" : "-")
                                         </td>
-                                        <td class="govuk-table__cell govuk-table__cell--numeric" data-label="Total number of apprentices that selected this statement">@feedbackItem.TotalCount</td>
                                     </tr>
                                 }
                             </tbody>
@@ -409,9 +403,8 @@
                             <thead class="govuk-table__head">
                                 <tr class="govuk-table__row">
                                     <th scope="col" class="govuk-table__header">Statement</th>
-                                    <th scope="col" class="govuk-table__header govuk-table__header--numeric">Percentage of apprentices that selected this as a "strength"</th>
-                                    <th scope="col" class="govuk-table__header govuk-table__header--numeric">Percentage of apprentices that selected this as "needs improvement"</th>
-                                    <th scope="col" class="govuk-table__header govuk-table__header--numeric">Total number of apprentices that selected this statement</th>
+                                    <th scope="col" class="govuk-table__header govuk-table__header--numeric">Percentage of apprentices who said this was to a reasonable standard</th>
+                                    <th scope="col" class="govuk-table__header govuk-table__header--numeric">Percentage of apprentices who said this was not to a reasonable standard</th>
                                 </tr>
                             </thead>
                             <tbody class="govuk-table__body">
@@ -420,16 +413,15 @@
                                     <tr class="govuk-table__row">
                                         <th class="govuk-table__cell govuk-!-font-weight-regular" scope="row">@feedbackItem.Name</th>
                                         <td class="govuk-table__cell govuk-table__cell--numeric"
-                                            data-label="Percentage of apprentices that selected this as a strength"
-                                            data-title="@feedbackItem.AgreePerc% of @feedbackItem.TotalCount apprentices selected this as a 'strength'">
+                                            data-label="Percentage of apprentices who said this was to a reasonable standard"
+                                            data-title="@feedbackItem.AgreePerc% of apprentices agreed with this statement">
                                             @(feedbackItem.TotalCount > 0 ? $"{feedbackItem.AgreePerc}%" : "-")
                                         </td>
                                         <td class="govuk-table__cell govuk-table__cell--numeric"
-                                            data-label="Percentage of apprentices that selected this as needs improvement"
-                                            data-title="@feedbackItem.DisagreePerc% of @feedbackItem.TotalCount apprentices selected this as a 'needs improvement'">
+                                            data-label="Percentage of apprentices who said this was not to a reasonable standard"
+                                            data-title="@feedbackItem.DisagreePerc% of apprentices disagreed with this statement">
                                             @(feedbackItem.TotalCount > 0 ? $"{feedbackItem.DisagreePerc}%" : "-")
                                         </td>
-                                        <td class="govuk-table__cell govuk-table__cell--numeric" data-label="Total number of apprentices that selected this statement">@feedbackItem.TotalCount</td>
                                     </tr>
                                 }
                             </tbody>
@@ -439,9 +431,8 @@
                             <thead class="govuk-table__head">
                                 <tr class="govuk-table__row">
                                     <th scope="col" class="govuk-table__header">Statement</th>
-                                    <th scope="col" class="govuk-table__header govuk-table__header--numeric">Percentage of apprentices that selected this as a "strength"</th>
-                                    <th scope="col" class="govuk-table__header govuk-table__header--numeric">Percentage of apprentices that selected this as "needs improvement"</th>
-                                    <th scope="col" class="govuk-table__header govuk-table__header--numeric">Total number of apprentices that selected this statement</th>
+                                    <th scope="col" class="govuk-table__header govuk-table__header--numeric">Percentage of apprentices who said this was to a reasonable standard</th>
+                                    <th scope="col" class="govuk-table__header govuk-table__header--numeric">Percentage of apprentices who said this was not to a reasonable standard</th>
                                 </tr>
                             </thead>
                             <tbody class="govuk-table__body">
@@ -450,16 +441,15 @@
                                     <tr class="govuk-table__row">
                                         <th class="govuk-table__cell govuk-!-font-weight-regular" scope="row">@feedbackItem.Name</th>
                                         <td class="govuk-table__cell govuk-table__cell--numeric"
-                                            data-label="Percentage of apprentices that selected this as a strength"
-                                            data-title="@feedbackItem.AgreePerc% of @feedbackItem.TotalCount apprentices selected this as a 'strength'">
+                                            data-label="Percentage of apprentices who said this was to a reasonable standard"
+                                            data-title="@feedbackItem.AgreePerc% of apprentices agreed with this statement">
                                             @(feedbackItem.TotalCount > 0 ? $"{feedbackItem.AgreePerc}%" : "-")
                                         </td>
                                         <td class="govuk-table__cell govuk-table__cell--numeric"
-                                            data-label="Percentage of apprentices that selected this as needs improvement"
-                                            data-title="@feedbackItem.DisagreePerc% of @feedbackItem.TotalCount apprentices selected this as a 'needs improvement'">
+                                            data-label="Percentage of apprentices who said this was not to a reasonable standard"
+                                            data-title="@feedbackItem.DisagreePerc% of apprentices disagreed with this statement">
                                             @(feedbackItem.TotalCount > 0 ? $"{feedbackItem.DisagreePerc}%" : "-")
                                         </td>
-                                        <td class="govuk-table__cell govuk-table__cell--numeric" data-label="Total number of apprentices that selected this statement">@feedbackItem.TotalCount</td>
                                     </tr>
                                 }
                             </tbody>
@@ -470,7 +460,7 @@
                 else
                 {
                     <h3 class="govuk-heading-m">@apprenticeFeedback.DisplayPeriod <span></span></h3>
-                    <p>There are no apprentice reviews for this period of time.</p>
+                    <p>You'll see apprentice reviews after at least 10 apprentices give feedback during an academic year.</p>
                 }
             </div>
         }

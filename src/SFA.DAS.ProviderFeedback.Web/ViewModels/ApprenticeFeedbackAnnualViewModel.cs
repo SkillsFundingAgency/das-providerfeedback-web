@@ -99,30 +99,30 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
 
         private string FormatDisplayPeriod(string timePeriod)
         {
-            if (timePeriod.Length == 6 && timePeriod.StartsWith("AY"))
+            if (timePeriod.Length != 6 || !timePeriod.StartsWith("AY"))
             {
-                string startYear = "20" + timePeriod.Substring(2, 2);
-                string endYear = "20" + timePeriod.Substring(4, 2);
-
-                string startDate = $"1 August {startYear}";
-
-                DateTime currentDate = DateTime.Now;
-
-                string endDate;
-                if (currentDate <= new DateTime(int.Parse(endYear), 7, 31))
-                {
-                    endDate = currentDate.ToString("d MMMM yyyy");
-                }
-                else
-                {
-                    endDate = $"31 July {endYear}";
-                }
-
-                return $"{startDate} to {endDate}";
+                return "Overall rating";
             }
-            return timePeriod;
-        }
 
+            string startYear = "20" + timePeriod.Substring(2, 2);
+            string endYear = "20" + timePeriod.Substring(4, 2);
+
+            string startDate = $"1 August {startYear}";
+
+            DateTime currentDate = DateTime.Now;
+
+            string endDate;
+            if (currentDate <= new DateTime(int.Parse(endYear), 7, 31))
+            {
+                endDate = currentDate.ToString("d MMMM yyyy");
+            }
+            else
+            {
+                endDate = $"31 July {endYear}";
+            }
+
+            return $"{startDate} to {endDate}";
+        }
 
         private string GetFeedbackRatingText(bool isProviderDetail, int TotalFeedbackResponses)
         {

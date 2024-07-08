@@ -44,7 +44,7 @@ function toggleTables(panelId) {
     }
 
     // Save user preference in a cookie
-    setCookie('viewPreference', graphVisible ? 'graph' : 'table', 7);
+    setCookie('viewPreference', graphVisible ? 'graph' : 'table', 1);
 }
 
 function applyUserPreference() {

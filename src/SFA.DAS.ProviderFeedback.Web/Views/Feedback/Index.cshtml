@@ -12,24 +12,25 @@
     <a id="back-link" class="govuk-back-link" href="@LinkGenerator.ProviderApprenticeshipServiceLink("account")">Back</a>
 }
 <div class="govuk-width-container">
-    <!--<div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner" style="margin-bottom: 2em;">
-          <div class="govuk-notification-banner__header">
-            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-              Notice
-            </h2>
-          </div>
-          <div class="govuk-notification-banner__content">
-            <h3 class="govuk-notification-banner__heading">
-              XX MONTH 2024:
-            </h3>
-            <p>We made changes to how our review scores are calculated. You may see slightly different scores than you did before.
-            </p>
-          </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div asp-show="Model.ShowReviewNotice" class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner" style="margin-bottom: 2em;">
+                <div class="govuk-notification-banner__header">
+                    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                        Notice
+                    </h2>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <h3 class="govuk-notification-banner__heading">
+                        @Model.ReviewNoticeDate
+                    </h3>
+                    <p>
+                        We made changes to how our review scores are calculated. You may see slightly different scores than you did before.
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>-->
+    </div>
     <h1 class="govuk-heading-xl" id="your-feedback">Your feedback</h1>
     <p class="govuk-body">We ask employers and apprentices for feedback on your training. They can give feedback after the apprentice has been training for 3 months.</p>
     <p class="govuk-body">If they give feedback more than once, we'll use their newest answers to calculate your scores.</p>

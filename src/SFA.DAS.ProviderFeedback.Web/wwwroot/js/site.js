@@ -63,16 +63,10 @@ function toggleTables(panelId) {
     }
 
     var analyticsConsentName = "AnalyticsConsent" + getEnvFromHost();
-
-    console.log("analyticsConsentName: ", analyticsConsentName);
-
     var analyticsConsentChoice = getCookie(analyticsConsentName);
-
-    console.log("Consent: ", analyticsConsentChoice);
 
     // Save user preference in a cookie conditional to the analytics consent
     if (analyticsConsentChoice === "true") {
-        console.log("Im setting cookie!")
         setCookie('viewPreference', graphVisible ? 'graph' : 'table', 1);
     }
 }

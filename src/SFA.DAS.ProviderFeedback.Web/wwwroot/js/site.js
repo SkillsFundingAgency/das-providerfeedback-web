@@ -10,7 +10,7 @@ function setCookie(name, value, days) {
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
-// Function to read a cookie
+ // Function to read a cookie
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -20,6 +20,25 @@ function getCookie(name) {
         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
+}
+
+//function get env
+function getEnvFromHost() {
+    var host = window.location.host;
+
+    var env = "";
+
+    if (host.includes("at-pas")) {
+        env = "AT";
+    } else if (host.includes("test-pas")) {
+        env = "TEST";
+    } else if (host.includes("test2-pas")) {
+        env = "TEST2";
+    } else if (host.includes("pp-pas")) {
+        env = "PP";
+    }
+
+    return env;
 }
 
 // Function to toggle between graph and table panels and save preference in a cookie
@@ -43,8 +62,13 @@ function toggleTables(panelId) {
         tablePanels[i].classList.toggle("app-show-hide-panel__hidden");
     }
 
-    // Save user preference in a cookie
-    setCookie('viewPreference', graphVisible ? 'graph' : 'table', 1);
+    var analyticsConsentName = "AnalyticsConsent" + getEnvFromHost();
+    var analyticsConsentChoice = getCookie(analyticsConsentName);
+
+    // Save user preference in a cookie conditional to the analytics consent
+    if (analyticsConsentChoice === "true") {
+        setCookie('viewPreference', graphVisible ? 'graph' : 'table', 1);
+    }
 }
 
 function applyUserPreference() {

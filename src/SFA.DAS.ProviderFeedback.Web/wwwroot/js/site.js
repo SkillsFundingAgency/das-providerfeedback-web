@@ -25,7 +25,7 @@ function getCookie(name) {
 //function get env
 function getEnvFromHost() {
     var host = window.location.host;
-    console.log(host);
+
     var env = "";
 
     if (host.includes("at-pas")) {

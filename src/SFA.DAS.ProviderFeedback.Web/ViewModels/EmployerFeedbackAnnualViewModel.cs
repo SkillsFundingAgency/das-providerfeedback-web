@@ -5,10 +5,13 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
 {
     public class EmployerFeedbackAnnualViewModel
     {
+        public string NoFeedBackText { get; set; }
         public List<EmployerFeedbackAnnualSummary> AnnualEmployerFeedbackDetails { get; set; }
 
         public EmployerFeedbackAnnualViewModel(EmployerFeedbackAnnual employerFeedback)
         {
+            NoFeedBackText = GetFeedbackRatingText(true, 0);
+
             if (employerFeedback == null || !employerFeedback.AnnualEmployerFeedbackDetails.Any())
             {
                 return;
@@ -75,6 +78,7 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
                 .OrderBy(x => x.TimePeriod != "All")
                 .ThenByDescending(x => ParseTimePeriod(x.TimePeriod))
                 .ToList();
+
         }
 
         private int ParseTimePeriod(string timePeriod)

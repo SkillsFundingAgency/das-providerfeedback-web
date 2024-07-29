@@ -5,9 +5,11 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
 {
     public class ApprenticeFeedbackAnnualViewModel
     {
+        public string NoFeedBackText { get; set; }
         public List<ApprenticeFeedbackAnnualSummary> AnnualApprenticeFeedbackDetails { get; set; }
         public ApprenticeFeedbackAnnualViewModel(ApprenticeFeedbackAnnual apprenticeFeedback)
         {
+            NoFeedBackText = GetFeedbackRatingText(true, 0);
             if (apprenticeFeedback == null || !apprenticeFeedback.AnnualApprenticeFeedbackDetails.Any())
             {
                 return;
@@ -73,6 +75,7 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
                 .OrderBy(x => x.TimePeriod != "All")
                 .ThenByDescending(x => ParseTimePeriod(x.TimePeriod))
                 .ToList();
+
         }
 
         private int ParseTimePeriod(string timePeriod)

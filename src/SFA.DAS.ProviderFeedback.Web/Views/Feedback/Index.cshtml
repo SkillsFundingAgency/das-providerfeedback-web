@@ -37,12 +37,12 @@
     <nav id="contents" aria-label="Contents" class="app-contents-list" role="navigation">
         <h2 class="app-contents-list__title">Contents</h2>
         <ul class="app-contents-list__list">
-            <li class="app-contents-list__list-item app-contents-list__list-item--dashed"><a href="#your-feedback"><a href="#employer-reviews" title="Employer reviews">Employer reviews</a></li>
+            <li style ="@(Model.IsEmployerProvider ? "display:none;" : "")" class="app-contents-list__list-item app-contents-list__list-item--dashed"><a href="#your-feedback"><a href="#employer-reviews" title="Employer reviews">Employer reviews</a></li>
             <li class="app-contents-list__list-item app-contents-list__list-item--dashed"><a href="#your-feedback"><a href="#apprentice-reviews" title="Apprentice reviews">Apprentice reviews</a></li>
         </ul>
     </nav>
-    <h2 class="govuk-heading-l" id="employer-reviews">Employer reviews</h2>
-    <div class="govuk-tabs" data-module="govuk-tabs">
+    <h2 style="@(Model.IsEmployerProvider ? "display:none;" : "")" class="govuk-heading-l" id="employer-reviews">Employer reviews</h2>
+    <div style="@(Model.IsEmployerProvider ? "display:none;" : "")" class="govuk-tabs" data-module="govuk-tabs">
         <h3 class="govuk-tabs__title">
             Employer reviews by year
         </h3>

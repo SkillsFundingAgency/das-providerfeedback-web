@@ -29,7 +29,8 @@ namespace SFA.DAS.ProviderFeedback.Application.Queries.GetProviderFeedbackAnnual
             {
                 ApprenticeFeedback = result.Body.ProviderFeedback.ApprenticeFeedback,
                 EmployerFeedback = result.Body.ProviderFeedback.EmployerFeedback,
-                Ukprn = result.Body.ProviderId
+                Ukprn = result.Body.ProviderId,
+                IsEmployerProvider= result.Body.ProviderFeedback.IsEmployerProvider
             };
         }
         private List<EmployerFeedbackAnnualAttributeDetail> ConstructEmployerFeedbackDetails(List<EmployerFeedbackAnnualAttributeDetail> feedbackResult)

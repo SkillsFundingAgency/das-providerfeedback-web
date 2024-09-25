@@ -40,6 +40,7 @@ namespace SFA.DAS.ProviderFeedback.Application.UnitTests.Commands
             _mockApiClient.Verify(x => x.Get<GetProviderFeedbackAnnualResponse>(It.IsAny<GetProviderFeedbackAnnualRequest>()), Times.Once);
             Assert.AreEqual(expectedResponse.ProviderFeedback.ApprenticeFeedback, result.ApprenticeFeedback);
             Assert.AreEqual(expectedResponse.ProviderFeedback.EmployerFeedback, result.EmployerFeedback);
+            Assert.AreEqual(expectedResponse.ProviderFeedback.IsEmployerProvider, result.IsEmployerProvider);
             Assert.AreEqual(expectedResponse.ProviderId, result.Ukprn);
         }
 
@@ -79,6 +80,7 @@ namespace SFA.DAS.ProviderFeedback.Application.UnitTests.Commands
                 ProviderId = providerId,
                 ProviderFeedback = new ProviderFeedbackAnnualModel
                 {
+                    IsEmployerProvider = true,
                     ApprenticeFeedback = new ApprenticeFeedbackAnnual
                     {
                         AnnualApprenticeFeedbackDetails = new List<ApprenticeFeedbackAnnualSummary>

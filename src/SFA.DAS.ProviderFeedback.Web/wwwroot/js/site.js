@@ -42,11 +42,14 @@ function getEnvFromHost() {
 }
 
 // Function to toggle between graph and table panels and save preference in a cookie
-function toggleTables(panelId) {
-    // Select all graph panels
-    var graphPanels = document.querySelectorAll('.app-show-hide-panel[data-panel-label="graph"]');
-    // Select all table panels
-    var tablePanels = document.querySelectorAll('.app-show-hide-panel[data-panel-label="table and accessible"]');
+function toggleTables(type) {
+
+    var prefix = type === 'employer' ? 'emp' : 'app';
+
+    // Select all graph panels and table panels based on the prefix
+    var graphPanels = document.querySelectorAll(`.app-show-hide-panel[data-panel-label="graph"][id^="${prefix}-feedback-graph-"]`);
+    var tablePanels = document.querySelectorAll(`.app-show-hide-panel[data-panel-label="table and accessible"][id^="${prefix}-feedback-table-"]`);
+
 
     // Toggle visibility for all graph panels
     var graphVisible = false;
@@ -67,16 +70,17 @@ function toggleTables(panelId) {
 
     // Save user preference in a cookie conditional to the analytics consent
     if (analyticsConsentChoice === "true") {
-        setCookie('viewPreference', graphVisible ? 'graph' : 'table', 1);
+        setCookie('viewPreference-' + type, graphVisible ? 'graph' : 'table', 1);
     }
 }
 
 function applyUserPreference() {
-    var preference = getCookie('viewPreference');
-    if (preference === 'table') {
+    var employerPreference = getCookie('viewPreference-employer');
+    var apprenticePreference = getCookie('viewPreference-apprentice');
+    if (employerPreference === 'table') {
         // Show table panels and hide graph panels
-        var graphPanels = document.querySelectorAll('.app-show-hide-panel[data-panel-label="graph"]');
-        var tablePanels = document.querySelectorAll('.app-show-hide-panel[data-panel-label="table and accessible"]');
+        var graphPanels = document.querySelectorAll('.app-show-hide-panel[data-panel-label="graph"][id*="emp-"]');
+        var tablePanels = document.querySelectorAll('.app-show-hide-panel[data-panel-label="table and accessible"][id*="emp-"]');
 
         for (var i = 0; i < graphPanels.length; i++) {
             graphPanels[i].classList.add("app-show-hide-panel__hidden");
@@ -85,17 +89,18 @@ function applyUserPreference() {
         for (var i = 0; i < tablePanels.length; i++) {
             tablePanels[i].classList.remove("app-show-hide-panel__hidden");
         }
-    } else {
-        // Default behavior: show graph panels and hide table panels
-        var graphPanels = document.querySelectorAll('.app-show-hide-panel[data-panel-label="graph"]');
-        var tablePanels = document.querySelectorAll('.app-show-hide-panel[data-panel-label="table and accessible"]');
+    }
+    if (apprenticePreference === 'table') {
+        // Show table panels and hide graph panels
+        var graphPanels = document.querySelectorAll('.app-show-hide-panel[data-panel-label="graph"][id*="app-"]');
+        var tablePanels = document.querySelectorAll('.app-show-hide-panel[data-panel-label="table and accessible"][id*="app-"]');
 
         for (var i = 0; i < graphPanels.length; i++) {
-            graphPanels[i].classList.remove("app-show-hide-panel__hidden");
+            graphPanels[i].classList.add("app-show-hide-panel__hidden");
         }
 
         for (var i = 0; i < tablePanels.length; i++) {
-            tablePanels[i].classList.add("app-show-hide-panel__hidden");
+            tablePanels[i].classList.remove("app-show-hide-panel__hidden");
         }
     }
 }

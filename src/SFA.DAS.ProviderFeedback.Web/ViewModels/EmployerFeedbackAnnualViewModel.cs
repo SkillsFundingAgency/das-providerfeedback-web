@@ -12,11 +12,6 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
         {
             NoFeedBackText = GetFeedbackRatingText(true, 0);
 
-            if (employerFeedback == null || !employerFeedback.AnnualEmployerFeedbackDetails.Any())
-            {
-                return;
-            }
-
             // Determine the current academic year
             int currentYear = DateTime.Now.Year;
             if (DateTime.Now.Month < 8) // Academic year starts in August
@@ -35,6 +30,27 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
             if (DateTime.Now >= new DateTime(currentYear + 1, 8, 1))
             {
                 expectedPeriods.Add($"AY{(currentYear + 2).ToString().Substring(2)}{(currentYear + 3).ToString().Substring(2)}");
+            }
+
+            if (employerFeedback == null || !employerFeedback.AnnualEmployerFeedbackDetails.Any())
+            {
+                if (AnnualEmployerFeedbackDetails == null)
+                {
+                    AnnualEmployerFeedbackDetails = new List<EmployerFeedbackAnnualSummary>();
+                }
+
+                foreach (var period in expectedPeriods)
+                {
+                    AnnualEmployerFeedbackDetails.Add(new EmployerFeedbackAnnualSummary
+                    {
+                        TimePeriod = period,
+                        TotalFeedbackRating = 0,
+                        DisplayYear = FormatDisplayYear(period),
+                        DisplayPeriod = FormatDisplayPeriod(period),
+                    });
+                }
+
+                return;
             }
 
             // Check for missing periods

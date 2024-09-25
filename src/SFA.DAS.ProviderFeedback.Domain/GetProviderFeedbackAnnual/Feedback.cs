@@ -21,6 +21,7 @@ namespace SFA.DAS.ProviderFeedback.Domain.GetProviderFeedbackAnnual
         public class ProviderFeedbackAnnualModel
         {
             public int ProviderId { get; set; }
+            public bool IsEmployerProvider { get; set; }
             public EmployerFeedbackAnnual EmployerFeedback { get; set; }
             public ApprenticeFeedbackAnnual ApprenticeFeedback { get; set; }
         }

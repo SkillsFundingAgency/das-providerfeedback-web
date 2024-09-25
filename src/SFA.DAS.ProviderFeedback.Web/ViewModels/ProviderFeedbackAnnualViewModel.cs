@@ -7,12 +7,14 @@ namespace SFA.DAS.ProviderFeedback.Web.ViewModels
         public bool ShowReviewNotice { get; set; }
         public string ReviewNoticeDate { get; set; }
         public int UKPRN { get; set; }
+        public bool IsEmployerProvider { get; set; }
         public EmployerFeedbackAnnualViewModel EmployerFeedback { get; set; }
         public ApprenticeFeedbackAnnualViewModel ApprenticeFeedback { get; set; }
 
         public ProviderFeedbackAnnualViewModel(GetProviderFeedbackAnnualResult feedback)
         { 
             UKPRN = feedback.Ukprn;
+            IsEmployerProvider = feedback.IsEmployerProvider;
             EmployerFeedback = new EmployerFeedbackAnnualViewModel( feedback.EmployerFeedback);
             ApprenticeFeedback = new ApprenticeFeedbackAnnualViewModel(feedback.ApprenticeFeedback);
         }

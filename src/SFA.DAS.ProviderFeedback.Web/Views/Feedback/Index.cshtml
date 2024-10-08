@@ -97,7 +97,7 @@
                                     <span aria-hidden="true" class="das-rating__icon-star@(employerFeedback.TotalFeedbackRating < 3 ? "--empty" : "")"></span>
                                     <span aria-hidden="true" class="das-rating__icon-star@(employerFeedback.TotalFeedbackRating < 4 ? "--empty" : "")"></span>
                                 </span>
-                                <span class="govuk-!-font-weight-bold das-rating__label--@(employerFeedback.TotalFeedbackRating > 2 ? "good" : "poor")">@employerFeedback.TotalFeedbackText.GetDescription()</span>
+                                <span id="employer-rating-description-@employerFeedback.TimePeriod" class="govuk-!-font-weight-bold das-rating__label--@(employerFeedback.TotalFeedbackRating > 2 ? "good" : "poor")">@employerFeedback.TotalFeedbackText.GetDescription()</span>
                             }
 
                             @if (employerFeedback.TotalFeedbackRating == 0)
@@ -256,7 +256,7 @@
                                     <span aria-hidden="true" class="das-rating__icon-star@(apprenticeFeedback.TotalFeedbackRating < 3 ? "--empty" : "")"></span>
                                     <span aria-hidden="true" class="das-rating__icon-star@(apprenticeFeedback.TotalFeedbackRating < 4 ? "--empty" : "")"></span>
                                 </span>
-                                <span class="govuk-!-font-weight-bold das-rating__label--@(apprenticeFeedback.TotalFeedbackRating > 2 ? "good" : "poor")">@apprenticeFeedback.TotalFeedbackText.GetDescription()</span>
+                                <span id="apprentice-rating-description-@apprenticeFeedback.TimePeriod" class="govuk-!-font-weight-bold das-rating__label--@(apprenticeFeedback.TotalFeedbackRating > 2 ? "good" : "poor")">@apprenticeFeedback.TotalFeedbackText.GetDescription()</span>
                             }
 
                             @if (apprenticeFeedback.TotalFeedbackRating == 0)

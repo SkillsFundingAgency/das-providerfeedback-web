@@ -5,7 +5,7 @@
 @inject SFA.DAS.ProviderUrlHelper.ILinkGenerator LinkGenerator
 @{
     ViewBag.Vpv = "/feedback/page-index";
-    ViewBag.Title = "FeedbackController";
+    ViewBag.Title = "Your feedback";
 }
 
 @section breadcrumb {
@@ -37,12 +37,12 @@
     <nav id="contents" aria-label="Contents" class="app-contents-list" role="navigation">
         <h2 class="app-contents-list__title">Contents</h2>
         <ul class="app-contents-list__list">
-            <li class="app-contents-list__list-item app-contents-list__list-item--dashed"><a href="#your-feedback"><a href="#employer-reviews" title="Employer reviews">Employer reviews</a></li>
+            <li style ="@(Model.IsEmployerProvider ? "display:none;" : "")" class="app-contents-list__list-item app-contents-list__list-item--dashed"><a href="#your-feedback"><a href="#employer-reviews" title="Employer reviews">Employer reviews</a></li>
             <li class="app-contents-list__list-item app-contents-list__list-item--dashed"><a href="#your-feedback"><a href="#apprentice-reviews" title="Apprentice reviews">Apprentice reviews</a></li>
         </ul>
     </nav>
-    <h2 class="govuk-heading-l" id="employer-reviews">Employer reviews</h2>
-    <div class="govuk-tabs" data-module="govuk-tabs">
+    <h2 style="@(Model.IsEmployerProvider ? "display:none;" : "")" class="govuk-heading-l" id="employer-reviews">Employer reviews</h2>
+    <div style="@(Model.IsEmployerProvider ? "display:none;" : "")" class="govuk-tabs" data-module="govuk-tabs">
         <h3 class="govuk-tabs__title">
             Employer reviews by year
         </h3>
@@ -97,7 +97,7 @@
                                     <span aria-hidden="true" class="das-rating__icon-star@(employerFeedback.TotalFeedbackRating < 3 ? "--empty" : "")"></span>
                                     <span aria-hidden="true" class="das-rating__icon-star@(employerFeedback.TotalFeedbackRating < 4 ? "--empty" : "")"></span>
                                 </span>
-                                <span class="govuk-!-font-weight-bold das-rating__label--@(employerFeedback.TotalFeedbackRating > 2 ? "good" : "poor")">@employerFeedback.TotalFeedbackText.GetDescription()</span>
+                                <span id="employer-rating-description-@employerFeedback.TimePeriod" class="govuk-!-font-weight-bold das-rating__label--@(employerFeedback.TotalFeedbackRating > 2 ? "good" : "poor")">@employerFeedback.TotalFeedbackText.GetDescription()</span>
                             }
 
                             @if (employerFeedback.TotalFeedbackRating == 0)
@@ -118,10 +118,10 @@
                         <!-- GRAPH AND TABLES CODE STARTS -->
 
                         <div data-show-hide-panels="true">
-                            <div class="app-show-hide-panel" data-panel-label="graph" id="app-emp-feedback-graph-@employerFeedback.TimePeriod">
+                            <div class="app-show-hide-panel" data-panel-label="graph" id="emp-feedback-graph-@employerFeedback.TimePeriod">
                                 <div class="govuk-button-group app-show-hide-panel__buttons">
                                     <!-- Button to switch to the table view -->
-                                    <button class="govuk-button govuk-button--secondary govuk-!-font-size-16" onclick="toggleTables('emp-@employerFeedback.TimePeriod')">Change to table and accessible view</button>
+                                    <button class="govuk-button govuk-button--secondary govuk-!-font-size-16" onclick="toggleTables('employer')">Change to table and accessible view</button>
                                 </div>
                                 <!-- Your graph content -->
                                 <div id="employer-feedback-graphs-@employerFeedback.TimePeriod">
@@ -148,10 +148,10 @@
                             </div>
                         </div>
                         <!-- TABLE CONTAINER -->
-                        <div class="app-show-hide-panel app-show-hide-panel__hidden" data-panel-label="table and accessible" id="app-emp-feedback-table-@employerFeedback.TimePeriod">
+                        <div class="app-show-hide-panel app-show-hide-panel__hidden" data-panel-label="table and accessible" id="emp-feedback-table-@employerFeedback.TimePeriod">
                             <div class="govuk-button-group app-show-hide-panel__buttons">
                                 <!-- Button to switch back to the graph view -->
-                                <button class="govuk-button govuk-button--secondary govuk-!-font-size-16" onclick="toggleTables('emp-@employerFeedback.TimePeriod')">Change to graph view</button>
+                                <button class="govuk-button govuk-button--secondary govuk-!-font-size-16" onclick="toggleTables('employer')">Change to graph view</button>
                             </div>
                             <table class="govuk-table das-table--responsive govuk-!-font-size-16" data-target="employer-feedback-graph-@employerFeedback.TimePeriod" data-label="employers" data-feedback-graph="true">
                                 <thead class="govuk-table__head">
@@ -256,7 +256,7 @@
                                     <span aria-hidden="true" class="das-rating__icon-star@(apprenticeFeedback.TotalFeedbackRating < 3 ? "--empty" : "")"></span>
                                     <span aria-hidden="true" class="das-rating__icon-star@(apprenticeFeedback.TotalFeedbackRating < 4 ? "--empty" : "")"></span>
                                 </span>
-                                <span class="govuk-!-font-weight-bold das-rating__label--@(apprenticeFeedback.TotalFeedbackRating > 2 ? "good" : "poor")">@apprenticeFeedback.TotalFeedbackText.GetDescription()</span>
+                                <span id="apprentice-rating-description-@apprenticeFeedback.TimePeriod" class="govuk-!-font-weight-bold das-rating__label--@(apprenticeFeedback.TotalFeedbackRating > 2 ? "good" : "poor")">@apprenticeFeedback.TotalFeedbackText.GetDescription()</span>
                             }
 
                             @if (apprenticeFeedback.TotalFeedbackRating == 0)
@@ -273,10 +273,10 @@
                         <!-- GRAPH AND TABLES CODE STARTS -->
 
                         <div data-show-hide-panels="true">
-                            <div class="app-show-hide-panel" data-panel-label="graph" id="app-emp-feedback-graph-@apprenticeFeedback.TimePeriod">
+                            <div class="app-show-hide-panel" data-panel-label="graph" id="app-feedback-graph-@apprenticeFeedback.TimePeriod">
                                 <div class="govuk-button-group app-show-hide-panel__buttons">
                                     <!-- Button to switch to the table view -->
-                                    <button class="govuk-button govuk-button--secondary govuk-!-font-size-16" onclick="toggleTables('app-@apprenticeFeedback.TimePeriod')">Change to table and accessible view</button>
+                                    <button class="govuk-button govuk-button--secondary govuk-!-font-size-16" onclick="toggleTables('apprentice')">Change to table and accessible view</button>
                                 </div>
                                 <!-- Your graph content -->
                                 <div id="apprentice-feedback-graphs-@apprenticeFeedback.TimePeriod">
@@ -375,10 +375,10 @@
                             </div>
                         </div>
                         <!-- TABLE CONTAINER -->
-                        <div class="app-show-hide-panel app-show-hide-panel__hidden" data-panel-label="table and accessible" id="app-emp-feedback-table-@apprenticeFeedback.TimePeriod">
+                        <div class="app-show-hide-panel app-show-hide-panel__hidden" data-panel-label="table and accessible" id="app-feedback-table-@apprenticeFeedback.TimePeriod">
                             <div class="govuk-button-group app-show-hide-panel__buttons">
                                 <!-- Button to switch back to the graph view -->
-                                <button class="govuk-button govuk-button--secondary govuk-!-font-size-16" onclick="toggleTables('app-@apprenticeFeedback.TimePeriod')">Change to graph view</button>
+                                <button class="govuk-button govuk-button--secondary govuk-!-font-size-16" onclick="toggleTables('apprentice')">Change to graph view</button>
                             </div>
                             <table class="govuk-table das-table--responsive govuk-!-font-size-16" data-target="apprentice-feedback-graph-@apprenticeFeedback.TimePeriod" data-label="apprentices" data-feedback-graph="true">
                                 <caption class="govuk-table__caption govuk-caption-l govuk-!-font-weight-regular">Communication</caption>
@@ -470,7 +470,7 @@
                     else
                     {
                         <h3 class="govuk-heading-m">@apprenticeFeedback.DisplayPeriod <span></span></h3>
-                        <p>You'll see apprentice reviews after at least 10 apprentices give feedback during an academic year.</p>
+                        <p>You'll see apprentice reviews after at least 5 apprentices give feedback during an academic year.</p>
                     }
                 </div>
             }

@@ -3,13 +3,13 @@
 # Provider Feedback Web
 <img src="https://avatars.githubusercontent.com/u/9841374?s=200&v=4" align="right" alt="UK Government logo">
 
-[![Build Status](https://sfa-gov-uk.visualstudio.com/Digital%20Apprenticeship%20Service/_apis/build/status/das-providerfeedback-web?repoName=SkillsFundingAgency%2Fdas-providerfeedback-web&branchName=master)](https://sfa-gov-uk.visualstudio.com/Digital%20Apprenticeship%20Service/_build/latest?definitionId=2539&repoName=SkillsFundingAgency%2Fdas-providerfeedback-web&branchName=master)
+[![Build Status](https://sfa-gov-uk.visualstudio.com/Digital%20Apprenticeship%20Service/_apis/build/status/das-providerfeedback-web?repoName=SkillsFundingAgency%2Fdas-providerfeedback-web&branchName=master)](https://sfa-gov-uk.visualstudio.com/Digital%20Apprenticeship%20Service/_build/latest?definitionId=3675&repoName=SkillsFundingAgency%2Fdas-providerfeedback-web&branchName=main)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SkillsFundingAgency_das-providerfeedback-web&metric=alert_status)](https://sonarcloud.io/project/overview?id=SkillsFundingAgency_das-providerfeedback-web)
-[![Jira Project](https://img.shields.io/badge/Jira-Project-blue)](https://skillsfundingagency.atlassian.net/browse/QF-72)
-[![Confluence Project](https://img.shields.io/badge/Confluence-Project-blue)](https://skillsfundingagency.atlassian.net/wiki/spaces/NDL/pages/3776446580/Provider+Feedback+-+QF)
+[![Jira Project](https://img.shields.io/badge/Jira-Project-blue)](https://skillsfundingagency.atlassian.net/browse/EC-481)
+[![Confluence Project](https://img.shields.io/badge/Confluence-Project-blue)](https://skillsfundingagency.atlassian.net/wiki/spaces/NDL/pages/4492754969/Provider+feedback)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg?longCache=true&style=flat-square)](https://en.wikipedia.org/wiki/MIT_License)
 
-This repository represents the Provider Feedback Web code base. Provider Feedback is a service that allows providers to view their feedback from employers and apprentices.Either way, the UI code base is the `das-providerfeedback-web` repository, the innner api's are the `das-apprentice-feedback-api` repository and `das-provide-feedback-employer` repository , and the outer API code base is in the `das-apim-endpoints` repository within the `ProviderFeedback` project. It should be noted that this service is integrated into the apprentice account which means to run it locally you need other services running simultaneously. 
+This repository represents the Provider Feedback Web code base. Provider Feedback is a service that allows providers to view their feedback from employers and apprentices.Either way, the UI code base is the `das-providerfeedback-web` repository, the innner api's are the `das-apprentice-feedback-api` repository and `das-provide-feedback-employer` repository , and the outer API code base is in the `das-apim-endpoints` repository within the `ProviderFeedback` project. 
 
 ## Developer Setup
 ### Requirements
@@ -41,7 +41,7 @@ In order to run this solution locally you will need the following:
   },
   "ProviderFeedbackWeb": {
     "ShowReviewNotice": true,
-    "ReviewNoticeDate": "March/April 2024"
+    "ReviewNoticeDate": "March/April 2025"
   }
 ```
 * **Config** - You can find the latest config file in [das-employer-config](https://github.com/SkillsFundingAgency/das-employer-config/blob/master/das-providerfeedback-web/SFA.DAS.ProviderFeedback.Web.json) repository.
@@ -60,17 +60,15 @@ In order to run this solution locally you will need the following:
 * Solutions to run in conjunction - To get this solution running successfully you will also need the following solutions running:
     * The Outer API [das-apim-endpoints](https://github.com/SkillsFundingAgency/das-apim-endpoints/tree/master/src/ProviderFeedback) should be available either running locally or accessible in an Azure tenancy.
     * The Inner API [das-apprentice-feedback-api](https://github.com/SkillsFundingAgency/das-apprentice-feedback-api) should be available either running locally or accessible in an Azure tenancy.
-    * The Inner API [das-provide-feedback-employer [ESFA.DAS.EmployerProvideFeedback.Api]](https://github.com/SkillsFundingAgency/das-provide-feedback-employer) should be available either running locally or accessible in an Azure tenancy.
-    * `das-apprentice-login-service` to get through the authentication for the frontend. 
-    * `das-apprentice-accounts-api` for the login connected to the authentication on the frontend. 
+    * The Inner API [das-provide-feedback-employer](https://github.com/SkillsFundingAgency/das-provide-feedback-employer) [ESFA.DAS.EmployerProvideFeedback.Api] should be available either running locally or accessible in an Azure tenancy.
 * Run the solution 
 
 ### Tests
 
-This codebase includes unit ,which are organized into separate projects with appropriate names.
+This codebase includes unit tests ,which are organized into separate projects with appropriate names.
 
 #### Unit Tests
 
 There are several unit test projects in the solution built using C#, .net 8.0, FluentAssertions, Moq, NUnit, and AutoFixture.
-* `SFA.DAS.ProviderFeedback.Application.UnitTests
+* `SFA.DAS.ProviderFeedback.Application.UnitTests`
 * `SFA.DAS.ProviderFeedbackWeb.UnitTests`

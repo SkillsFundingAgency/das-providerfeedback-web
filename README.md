@@ -9,7 +9,7 @@
 [![Confluence Project](https://img.shields.io/badge/Confluence-Project-blue)](https://skillsfundingagency.atlassian.net/wiki/spaces/NDL/pages/4492754969/Provider+feedback)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg?longCache=true&style=flat-square)](https://en.wikipedia.org/wiki/MIT_License)
 
-This repository represents the Provider Feedback Web code base. Provider Feedback is a service that allows providers to view their feedback from employers and apprentices.Either way, the UI code base is the `das-providerfeedback-web` repository, the innner api's are the `das-apprentice-feedback-api` repository and `das-provide-feedback-employer` repository , and the outer API code base is in the `das-apim-endpoints` repository within the `ProviderFeedback` project. 
+This repository represents the Provider Feedback Web code base. Provider Feedback is a service that allows providers to view feedback from employers and apprentices.Either way, the UI code base is the `das-providerfeedback-web` repository, the innner api's are the `das-apprentice-feedback-api` repository and `das-provide-feedback-employer` repository , and the outer API code base is in the `das-apim-endpoints` repository within the `ProviderFeedback` project. 
 
 ## Developer Setup
 ### Requirements
@@ -61,6 +61,8 @@ In order to run this solution locally you will need the following:
     * The Outer API [das-apim-endpoints](https://github.com/SkillsFundingAgency/das-apim-endpoints/tree/master/src/ProviderFeedback) should be available either running locally or accessible in an Azure tenancy.
     * The Inner API [das-apprentice-feedback-api](https://github.com/SkillsFundingAgency/das-apprentice-feedback-api) should be available either running locally or accessible in an Azure tenancy.
     * The Inner API [das-provide-feedback-employer](https://github.com/SkillsFundingAgency/das-provide-feedback-employer) [ESFA.DAS.EmployerProvideFeedback.Api] should be available either running locally or accessible in an Azure tenancy.
+    * The Roatp API [das-roatp-api](https://github.com/SkillsFundingAgency/das-roatp-api) should be available either running locally or accessible in an Azure tenancy.This api is used to determine the provider's status and handle authentication for the frontend.
+    * The Roatp Service API [das-roatp-service](https://github.com/SkillsFundingAgency/das-roatp-service) [ESFA.DAS.EmployerProvideFeedback.Api] should be available either running locally or accessible in an Azure tenancy.This api is used to determine whether the provider is an employer provider.
 * Run the solution 
 
 ### Tests

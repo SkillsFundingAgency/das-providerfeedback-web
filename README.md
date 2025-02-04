@@ -61,8 +61,8 @@ In order to run this solution locally you will need the following:
     * The Outer API [das-apim-endpoints](https://github.com/SkillsFundingAgency/das-apim-endpoints/tree/master/src/ProviderFeedback) should be available either running locally or accessible in an Azure tenancy.
     * The Inner API [das-apprentice-feedback-api](https://github.com/SkillsFundingAgency/das-apprentice-feedback-api) should be available either running locally or accessible in an Azure tenancy.
     * The Inner API [das-provide-feedback-employer](https://github.com/SkillsFundingAgency/das-provide-feedback-employer) [ESFA.DAS.EmployerProvideFeedback.Api] should be available either running locally or accessible in an Azure tenancy.
-    * The Roatp API [das-roatp-api](https://github.com/SkillsFundingAgency/das-roatp-api) should be available either running locally or accessible in an Azure tenancy.This api is used to determine the provider's status and handle authentication for the frontend.
-    * The Roatp Service API [das-roatp-service](https://github.com/SkillsFundingAgency/das-roatp-service) [ESFA.DAS.EmployerProvideFeedback.Api] should be available either running locally or accessible in an Azure tenancy.This api is used to determine whether the provider is an employer provider.
+    * The Roatp API [das-roatp-api](https://github.com/SkillsFundingAgency/das-roatp-api) should be available either running locally or accessible in an Azure tenancy.This api is used to determine the provider's status.
+    * The Roatp Service API [das-roatp-service](https://github.com/SkillsFundingAgency/das-roatp-service) should be available either running locally or accessible in an Azure tenancy.This api is used to determine whether the provider is an employer provider.
 * Run the solution 
 
 ### Tests

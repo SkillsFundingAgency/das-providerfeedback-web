@@ -9,13 +9,13 @@
 [![Confluence Project](https://img.shields.io/badge/Confluence-Project-blue)](https://skillsfundingagency.atlassian.net/wiki/spaces/NDL/pages/4492754969/Provider+feedback)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg?longCache=true&style=flat-square)](https://en.wikipedia.org/wiki/MIT_License)
 
-This repository represents the Provider Feedback Web code base. Provider Feedback is a service that allows providers to view feedback from employers and apprentices.Either way, the UI code base is the `das-providerfeedback-web` repository, the innner api's are the `das-apprentice-feedback-api` repository and `das-provide-feedback-employer` repository , and the outer API code base is in the `das-apim-endpoints` repository within the `ProviderFeedback` project. 
+This repository represents the Provider Feedback Web code base. Provider Feedback is a service that allows providers to view feedback from employers and apprentices. The UI code base is the `das-providerfeedback-web` repository, the inner APIs are the `das-apprentice-feedback-api` and `das-employer-feedback-api` repositories, and the outer API code base is in the `das-apim-endpoints` repository within the `ProviderFeedback` project.
 
 ## Developer Setup
 ### Requirements
 
 In order to run this solution locally you will need the following:
-* [.net 8.0](https://www.microsoft.com/net/download/)
+* [.net 10.0](https://www.microsoft.com/net/download/)
 * (VS Code Only) [C# Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp)
 * [Azurite](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azurite) (previously known as Azure Storage Emulator)
 
@@ -30,11 +30,11 @@ In order to run this solution locally you will need the following:
     }
   },
   "ConfigurationStorageConnectionString": "UseDevelopmentStorage=true;",
-  "ConfigNames": "SFA.DAS.ProviderFeedback.Web",
+  "ConfigNames": "SFA.DAS.ProviderFeedback.Web,SFA.DAS.Provider.DfeSignIn",
   "EnvironmentName": "LOCAL",
   "ResourceEnvironmentName": "LOCAL",
   "Version": "1.0",
-  "APPINSIGHTS_INSTRUMENTATIONKEY": "",
+  "APPLICATIONINSIGHTS_CONNECTION_STRING": "",
   "AllowedHosts": "*",
   "cdn": {
     "url": "https://das-at-frnt-end.azureedge.net"
@@ -43,34 +43,36 @@ In order to run this solution locally you will need the following:
     "ShowReviewNotice": true,
     "ReviewNoticeDate": "March/April 2025"
   }
+}
 ```
-* **Config** - You can find the latest config file in [das-employer-config](https://github.com/SkillsFundingAgency/das-employer-config/blob/master/das-providerfeedback-web/SFA.DAS.ProviderFeedback.Web.json) repository.
+* **Config** - You can find the latest config files in the [das-employer-config](https://github.com/SkillsFundingAgency/das-employer-config) repository:
+    * `das-providerfeedback-web/SFA.DAS.ProviderFeedback.Web.json` - Row Key: `SFA.DAS.ProviderFeedback.Web_1.0`
+    * `das-shared-config/SFA.DAS.Provider.DfeSignIn.json` - Row Key: `SFA.DAS.Provider.DfeSignIn_1.0`
 
-* **Azure Table Storage Explorer** - There is a choice on whether to add the row key and data to the Azure Table Storage Explorer or have that config in the appsettings.json file. Either will work. 
+    Partition Key for both: `LOCAL`
 
-    Azure Table Storage config
+    Either add each row to the `Configuration` table in Azurite (e.g. via Azure Storage Explorer) with the JSON as the `Data` value, or put the config directly in your local `appsettings.json`. Either will work.
 
-    Row Key: SFA.DAS.ProviderFeedback.Web_1.0
-
-    Partition Key: LOCAL
+* **Outer API config** - In the `SFA.DAS.ProviderFeedback.Web` config row, set `ProviderFeedbackOuterApi.ApiBaseUrl` (and `SubscriptionKey` if pointing at a deployed environment) to your local or AT outer API.
+* **Redis** - If `ProviderFeedback.RedisConnectionString` is set in your local config, Redis must be running (e.g. `docker run -d -p 6379:6379 redis`), otherwise startup fails. Set it to `""` to skip Redis and use default data protection locally.
+* **DfE Sign-in** - There is no stub login. You need a DfE Sign-in test account with access to the provider service in the test environment.
 
 ### Running
 
-* Start Azurite e.g. using a command `C:\Program Files (x86)\Microsoft SDKs\Azure\Storage Emulator>AzureStorageEmulator.exe start`
+* Start Azurite, e.g. run `azurite` from a terminal, or let Visual Studio start it automatically
 * Solutions to run in conjunction - To get this solution running successfully you will also need the following solutions running:
-    * The Outer API [das-apim-endpoints](https://github.com/SkillsFundingAgency/das-apim-endpoints/tree/master/src/ProviderFeedback) should be available either running locally or accessible in an Azure tenancy.
+    * The Outer API [das-apim-endpoints](https://github.com/SkillsFundingAgency/das-apim-endpoints/tree/main/src/ProviderFeedback) should be available either running locally or accessible in an Azure tenancy.
     * The Inner API [das-apprentice-feedback-api](https://github.com/SkillsFundingAgency/das-apprentice-feedback-api) should be available either running locally or accessible in an Azure tenancy.
-    * The Inner API [das-provide-feedback-employer](https://github.com/SkillsFundingAgency/das-provide-feedback-employer) [ESFA.DAS.EmployerProvideFeedback.Api] should be available either running locally or accessible in an Azure tenancy.
-    * The Roatp API [das-roatp-api](https://github.com/SkillsFundingAgency/das-roatp-api) should be available either running locally or accessible in an Azure tenancy.This api is used to determine the provider's status.
-    * The Roatp Service API [das-roatp-service](https://github.com/SkillsFundingAgency/das-roatp-service) should be available either running locally or accessible in an Azure tenancy.This api is used to determine whether the provider is an employer provider.
-* Run the solution 
+    * The Inner API [das-employer-feedback-api](https://github.com/SkillsFundingAgency/das-employer-feedback-api) [SFA.DAS.EmployerFeedback.Api] should be available either running locally or accessible in an Azure tenancy.
+    * The Roatp API [das-roatp-api](https://github.com/SkillsFundingAgency/das-roatp-api) should be available either running locally or accessible in an Azure tenancy. This api is used to determine the provider's status.
+* Run the `SFA.DAS.ProviderFeedback.Web` project (https profile: https://localhost:7067) 
 
 ### Tests
 
-This codebase includes unit tests ,which are organized into separate projects with appropriate names.
+Run all tests from the `src` folder with `dotnet test`.
 
 #### Unit Tests
 
-There are several unit test projects in the solution built using C#, .net 8.0, FluentAssertions, Moq, NUnit, and AutoFixture.
+There are several unit test projects in the solution built using C#, .net 10.0, FluentAssertions, Moq, NUnit, and AutoFixture.
 * `SFA.DAS.ProviderFeedback.Application.UnitTests`
 * `SFA.DAS.ProviderFeedbackWeb.UnitTests`

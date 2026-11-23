@@ -1,4 +1,3 @@
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFA.DAS.DfESignIn.Auth.AppStart;
@@ -21,6 +20,8 @@ builder.Services.Configure<ProviderFeedback>(rootConfiguration.GetSection("Provi
 builder.Services.Configure<ProviderFeedbackWeb>(rootConfiguration.GetSection("ProviderFeedbackWeb"));
 
 builder.Services.AddConfigurationOptions(rootConfiguration);
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSingleton<IAuthorizationHandler, ProviderAuthorizationHandler>();
 builder.Services.AddSingleton<IAuthorizationHandler, TrainingProviderAllRolesAuthorizationHandler>();
@@ -64,9 +65,8 @@ builder.Services.Configure<RouteOptions>(options =>
 
 builder.Services.AddDataProtection(rootConfiguration);
 
-builder.Services.AddFluentValidationAutoValidation();
 
-builder.Services.AddApplicationInsightsTelemetry();
+builder.Services.AddOpenTelemetryRegistration(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
 
 
 var app = builder.Build();

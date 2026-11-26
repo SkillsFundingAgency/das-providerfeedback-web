@@ -10,10 +10,8 @@
 		<PackageReference Include="Azure.Monitor.OpenTelemetry.AspNetCore" Version="1.6.0" />
 		<PackageReference Include="SFA.DAS.ProviderUrlHelper" Version="17267.0.559" />
 		<PackageReference Include="MediatR" Version="12.5.0" />
-		<PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="7.5.1" />
-		<PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="7.5.1" />
 		<PackageReference Include="SFA.DAS.Configuration.AzureTableStorage" Version="17.1.165" />
-		<PackageReference Include="SFA.DAS.DfESignIn.Auth" Version="17.1.89" />
+		<PackageReference Include="SFA.DAS.DfESignIn.Auth" Version="17.1.165" />
 		<PackageReference Include="SFA.DAS.Provider.Shared.UI" Version="2.0.61" />
 		<PackageReference Include="SFA.DAS.Validation.Mvc" Version="6.0.31" />
 		<PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="10.0.13" />
